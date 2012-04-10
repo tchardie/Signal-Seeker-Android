@@ -3,13 +3,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+    
+    <TextView android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dip" 
+        android:text="@string/signal_seeker_logo" />
 
-    <com.google.android.maps.MapView
-        android:id="@+id/mapview"
-        android:layout_width="fill_parent"
+    <LinearLayout android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:apiKey="0oSpuYBmxBb8vfPGw7cEYjstPfOvy7bVjPrV8_g"
-        android:clickable="true"
-        android:enabled="true" />
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+	    <com.google.android.maps.MapView
+	        android:id="@+id/mapview"
+	        android:layout_width="280dip"
+	        android:layout_height="420dip"
+	        android:apiKey="0oSpuYBmxBb8vfPGw7cEYjstPfOvy7bVjPrV8_g"
+	        android:clickable="true"
+	        android:enabled="true" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,10 +1,12 @@
 package com.cs4900.signalseeker;
 
+import com.depot.cs4900.Constants;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,13 +50,12 @@ public class EntryPage extends MapActivity {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, 0, 0, R.string.menu_new).setIcon(
 				android.R.drawable.btn_plus);
-
 		return true;
 	}
 
 	public boolean onMenuItemSelected(int id, MenuItem item) {
-		finish();
-		startActivity(getIntent());
+		Intent intent = new Intent(Constants.INTENT_ACTION_NEW_DATA_ENTRY);
+		startActivity(intent);
 		return true;
 	}
 

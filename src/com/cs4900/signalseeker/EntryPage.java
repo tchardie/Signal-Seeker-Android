@@ -5,27 +5,33 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 public class EntryPage extends MapActivity {
-	double lat = 30.8469348;
-	double lon = -83.2893965;
+	
+	//starting location
+	private double lat = 30.8469348;
+	private double lon = -83.2893965;
 
-	MapView mapView;
-	MapController mapController;
+	private MapView mapView;
+	private MapController mapController;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		//make starting point 
 		GeoPoint point = new GeoPoint((int) (lat * 1e6), (int) (lon * 1e6));
-		
+
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		mapView.setSatellite(true);
 		
+		//center map on the point
 		mapController = mapView.getController();
 		mapController.setZoom(15);
 		mapController.setCenter(point);
@@ -36,6 +42,20 @@ public class EntryPage extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, 0, 0, R.string.menu_new).setIcon(
+				android.R.drawable.btn_plus);
+
+		return true;
+	}
+
+	public boolean onMenuItemSelected(int id, MenuItem item) {
+		finish();
+		startActivity(getIntent());
+		return true;
 	}
 
 }

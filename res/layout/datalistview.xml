@@ -3,11 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-	
-    <Spinner 
-        android:id="@+id/data_spinner"
-        android:layout_width="fill_parent"
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-    />
+        android:text="" />
+
+    <ListView
+        android:id="@+android:id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>

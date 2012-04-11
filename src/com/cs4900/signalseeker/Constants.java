@@ -7,4 +7,5 @@ public class Constants {
 	public static final String LOGTAG = "Signal_Seeker";
 	
 	public static final String DATA_XML_FILE = "data.xml";
+	public static final String USER_XML_FILE = "users.xml";
 }

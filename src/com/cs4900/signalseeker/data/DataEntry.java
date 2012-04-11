@@ -1,126 +1,122 @@
 package com.cs4900.signalseeker.data;
 
+import android.R.integer;
 import android.os.Bundle;
 
 public class DataEntry {
-	private String address;
-	private double latitude;
-	private String location;
-	private int cell;
-	private int wifi;
-	private String carrier;
-	private int id;
-	private double longitude;
+	private String _address = "";
+	private double _latitude;
+	private double _longitude;
+    private int _id;
+    private String _location = "";
+    private int _wifi;
+    private int _cell;
+    private String _carrier;
 	
-	public DataEntry(){
-		
+	public DataEntry() {
+
 	}
 
-	public String getAddress() {
-		return address;
+	public int get_id() {
+		return _id;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void set_id(int _id) {
+		this._id = _id;
+	}
+   
+	public String get_address() {
+		return _address;
 	}
 
-	public double getLatitude() {
-		return latitude;
+	public void set_address(String _address) {
+		this._address = _address;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public double get_latitude() {
+		return _latitude;
 	}
 
-	public String getLocation() {
-		return location;
+	public void set_latitude(double _latitude) {
+		this._latitude = _latitude;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public double get_longitude() {
+		return _longitude;
 	}
 
-	public int getCell() {
-		return cell;
-	}
-
-	public void setCell(int cell) {
-		this.cell = cell;
-	}
-
-	public int getWifi() {
-		return wifi;
-	}
-
-	public void setWifi(int wifi) {
-		this.wifi = wifi;
-	}
-
-	public String getCarrier() {
-		return carrier;
-	}
-
-	public void setCarrier(String carrier) {
-		this.carrier = carrier;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void set_longitude(double _longitude) {
+		this._longitude = _longitude;
 	}
 	
+	public String get_location() {
+		return _location;
+	}
+
+	public void set_location(String _location) {
+		this._location = _location;
+	}
+
+	public int get_wifi() {
+		return _wifi;
+	}
+
+	public void set_wifi(int _wifi) {
+		this._wifi = _wifi;
+	}
+
+	public int get_cell() {
+		return _cell;
+	}
+
+	public void set_cell(int _cell) {
+		this._cell = _cell;
+	}
+
+	public String get_carrier() {
+		return _carrier;
+	}
+
+	public void set_carrier(String _carrier) {
+		this._carrier = _carrier;
+	}
+
 	public String toXMLString() {
-		StringBuilder sb = new StringBuilder("");
-		sb.append("<datum>");
-		sb.append("<address>"+this.address+"</address>");
-		sb.append("<latitude type=\"decimal\">" + this.latitude + "</latitude>");
-		sb.append("<location>" + this.location + "</location>");
-		sb.append("<cell type=\"integer\">" + this.cell + "</cell>");
-		sb.append("<wifi type=\"integer\">" + this.wifi + "</wifi>");
-		sb.append("<carrier>" + this.carrier + "</carrier>");
-		sb.append("<id type=\"integer\">"+this.id+"<id>");
-		sb.append("<longitude type=\"decimal\">" + this.longitude + "</longitude>");
-		sb.append("</datum>");
-		return sb.toString() + "\n";
-	}
+        StringBuilder sb = new StringBuilder("");
+        sb.append("<user>");
+        sb.append("<address>" + this._address + "</address>");
+        sb.append("<id type=\"integer\">"+this._id+"</id>");
+        sb.append("</user>");
+        return sb.toString() + "\n";
+    }
 	
 	public Bundle toBundle() {
-		Bundle b = new Bundle();
-		b.putString("address", this.address);
-		b.putDouble("latitude", this.latitude);
-		b.putString("location", this.location);
-		b.putInt("cell", this.cell);
-		b.putInt("wifi", this.wifi);
-		b.putString("carrier", this.carrier);
-		b.putInt("id", this.id);
-		b.putDouble("longitude", this.longitude);
-		
-		return b;
-	}
+        Bundle b = new Bundle();
+        b.putString("address", this._address);
+        b.putDouble("latitude", _latitude);
+        b.putDouble("longitude", _longitude);
+        b.putString("location", _location);
+        b.putInt("wifi", _wifi);
+        b.putInt("cell", _cell);
+        b.putString("carrier", _carrier);
+        b.putInt("id", this._id);
+        
+        return b;
+    }
 	
 	public static DataEntry fromBundle(Bundle b) {
-		DataEntry de = new DataEntry();
-		de.setAddress(b.getString("address"));
-		de.setLatitude(b.getDouble("latitude"));
-		de.setLocation(b.getString("location"));
-		de.setCell(b.getInt("cell"));
-		de.setWifi(b.getInt("wifi"));
-		de.setCarrier(b.getString("carrier"));
-		de.setId(b.getInt("id"));
-		de.setLongitude(b.getDouble("longitude"));
-		
-		return de;
-	}
-	
+        DataEntry ue = new DataEntry();
+        ue.set_address(b.getString("address"));
+        ue.set_latitude(b.getDouble("latitude"));
+        ue.set_longitude(b.getDouble("longitude"));
+        ue.set_location(b.getString("location"));
+        ue.set_wifi(b.getInt("wifi"));
+        ue.set_cell(b.getInt("cell"));
+        ue.set_carrier(b.getString("carrier"));
+        ue.set_id(b.getInt("i"));
+
+        return ue;
+    }
+    
+    
 }

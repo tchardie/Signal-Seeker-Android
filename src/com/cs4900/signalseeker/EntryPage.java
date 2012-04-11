@@ -2,7 +2,7 @@ package com.cs4900.signalseeker;
 
 import com.cs4900.signalseeker.Constants;
 import com.cs4900.signalseeker.R;
-import com.cs4900.signalseeker.data.DataEntry;
+import com.cs4900.signalseeker.*;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;

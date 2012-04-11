@@ -2,6 +2,7 @@ package com.cs4900.signalseeker;
 
 import com.cs4900.signalseeker.Constants;
 import com.cs4900.signalseeker.R;
+import com.cs4900.signalseeker.data.DataEntry;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -45,7 +46,10 @@ public class EntryPage extends MapActivity {
 		
 		location_text = (EditText)findViewById(R.id.new_location);
 		submit_button = (Button)findViewById(R.id.entry_add_button);
-
+		
+		
+		DataEntry dataEntry = new DataEntry();
+		dataEntry.setId(5);
 	}
 
 	@Override

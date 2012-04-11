@@ -44,7 +44,7 @@ public class DataListHandler extends DefaultHandler {
 		Message msg = new Message();
 		msg.what = 0;
 		msg.obj = ("Starting Docment");
-		if (this.dhandler == null) {
+		if (this.dhandler != null) {
 			this.dhandler.sendMessage(msg);
 		}
 
@@ -133,11 +133,12 @@ public class DataListHandler extends DefaultHandler {
 			return;
 		}
 	}
-	
+
 	@Override
-    public void characters(char ch[], int start, int length) {
-        String theString = new String(ch, start, length);
-       // Log.d(Constants.LOGTAG, " " + CatalogListHandler.CLASSTAG + "characters[" + theString + "]");
-        this.sb.append(theString);
-    }
+	public void characters(char ch[], int start, int length) {
+		String theString = new String(ch, start, length);
+		// Log.d(Constants.LOGTAG, " " + CatalogListHandler.CLASSTAG +
+		// "characters[" + theString + "]");
+		this.sb.append(theString);
+	}
 }

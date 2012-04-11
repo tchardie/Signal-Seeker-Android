@@ -2,16 +2,16 @@ package com.cs4900.signalseeker;
 
 import java.util.List;
 
-import com.cs4900.signalseeker.data.DataEntry;
-import com.cs4900.signalseeker.data.DataList;
+import com.cs4900.signalseeker.data.*;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class DataListView extends Activity {
-	private List<DataEntry> list;
+	List<DataEntry> list;
 	Spinner spinner;
 	private DataList dataList;
 
@@ -21,7 +21,7 @@ public class DataListView extends Activity {
 		setContentView(R.layout.datalistview);
 
 		spinner = (Spinner) findViewById(R.id.data_spinner);
-		list = DataList.parse(DataListView.this).getAllDataEntries();
+		list = DataList.parse(this).getAllDataEntries();
 	}
 
 	public void onResume() {
@@ -29,7 +29,8 @@ public class DataListView extends Activity {
 
 		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
 				this, android.R.layout.simple_spinner_dropdown_item);
-		// for(int i = 0;i<list.size();i++){
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// for (int i = 0; i < list.size(); i++) {
 		// adapter.add(list.get(i).getAddress().toString());
 		// }
 		//

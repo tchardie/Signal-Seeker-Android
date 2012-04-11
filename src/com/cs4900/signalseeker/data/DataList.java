@@ -166,6 +166,7 @@ public class DataList {
 			
 			return clHandler.getList();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

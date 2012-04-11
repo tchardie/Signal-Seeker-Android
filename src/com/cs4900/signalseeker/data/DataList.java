@@ -13,7 +13,11 @@ import org.xml.sax.XMLReader;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.cs4900.signalseeker.Constants;
+
+import com.cs4900.signalseeker.data.*;
 
 public class DataList {
 	private static final String CLASSTAG = DataList.class.getSimpleName();
@@ -121,6 +125,7 @@ public class DataList {
 	// Read from the XML file
 	public static DataList parse(Context context) {
 		try {
+			
 			FileInputStream fis = context
 					.openFileInput(Constants.DATA_XML_FILE);
 
@@ -158,11 +163,9 @@ public class DataList {
 			// clean up
 			fis.close();
 
-			// return our new cataloglist
+			
 			return clHandler.getList();
 		} catch (Exception e) {
-			Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
-					+ "Error parsing catalog list xml file: " + e.getMessage());
 			return null;
 		}
 	}

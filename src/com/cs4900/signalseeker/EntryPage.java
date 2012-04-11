@@ -47,9 +47,6 @@ public class EntryPage extends MapActivity {
 		location_text = (EditText)findViewById(R.id.new_location);
 		submit_button = (Button)findViewById(R.id.entry_add_button);
 		
-		
-		DataEntry dataEntry = new DataEntry();
-		dataEntry.setId(5);
 	}
 
 	@Override
@@ -67,6 +64,9 @@ public class EntryPage extends MapActivity {
 	public boolean onMenuItemSelected(int id, MenuItem item) {
 		//Intent intent = new Intent(Constants.INTENT_ACTION_SETTINGS);
 		//startActivity(intent);
+		
+		Intent intent = new Intent(EntryPage.this, DataListView.class);
+		startActivity(intent);
 		return true;
 	}
 

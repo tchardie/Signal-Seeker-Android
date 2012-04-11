@@ -24,6 +24,13 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".Settings" android:label="@string/settings">
+			<intent-filter>
+				<action android:name="com.cs4900.signalseeker.SETTINGS" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+        
         <uses-library android:name="com.google.android.maps" />
     </application>
 	

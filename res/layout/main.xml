@@ -13,6 +13,7 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
+        
 	    <com.google.android.maps.MapView
 	        android:id="@+id/mapview"
 	        android:layout_width="280dip"
@@ -20,6 +21,23 @@
 	        android:apiKey="0oSpuYBmxBb8vfPGw7cEYjstPfOvy7bVjPrV8_g"
 	        android:clickable="true"
 	        android:enabled="true" />
-    </LinearLayout>
-
+	    
+	    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:gravity="center_horizontal" android:padding="10dip">
+			
+		    <EditText android:id="@+id/new_location"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/mapview"
+				android:layout_marginLeft="10dip" android:layout_marginBottom="20dip"
+				style="@style/edit_text" />	
+			
+			<Button android:id="@+id/entry_add_button"  
+		        android:layout_width="wrap_content" 
+		        android:layout_height="wrap_content"
+		        android:layout_below="@id/new_location"   
+		        android:layout_marginLeft="10dip" android:layout_marginBottom="5dip"
+		        android:text="@string/entry_add_button_label" />
+		</RelativeLayout>
+	   </LinearLayout>
 </LinearLayout>

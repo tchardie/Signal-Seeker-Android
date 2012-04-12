@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,7 +65,14 @@ public class DataPoint extends Activity{
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, 0, 0, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_delete);
+		menu.add(0, 0, 0, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
+		return true;
+	}
+	public boolean onMenuItemSelected(int id, MenuItem item) {
+		dataList = DataList.parse(DataPoint.this);
+		dataList.replace(entry);
+		Intent intent = new Intent(this, DataListView.class);
+		startActivity(intent);
 		return true;
 	}
 	

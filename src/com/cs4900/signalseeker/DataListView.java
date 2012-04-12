@@ -35,7 +35,7 @@ public class DataListView extends ListActivity {
 	public void onResume() {
 		super.onResume();
 		// list = DataList.parse(this).getAllDataEntries();
-		list = DataList.parse(this).getAllUserEntries();
+		list = DataList.parse(this).getAllDataEntries();
 		catalogAdapter = new DataAdapter(DataListView.this, list, 2);
 		setListAdapter(catalogAdapter);
 	}

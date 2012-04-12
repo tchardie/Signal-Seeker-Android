@@ -39,6 +39,15 @@ public class DataPoint extends Activity {
 		cell = (EditText) findViewById(R.id.update_cell);
 		update = (Button) findViewById(R.id.Update);
 
+		update.setOnClickListener(new Button.OnClickListener() {
+
+			public void onClick(View v) {
+				try {
+					update();
+				} catch (Exception e) {
+				}
+			}
+		});
 	}
 
 	public void onResume() {
@@ -51,16 +60,6 @@ public class DataPoint extends Activity {
 		wifi.setText(String.valueOf(entry.getWifi()));
 		cell.setText(String.valueOf(entry.getCell()));
 		carrier.setText(entry.getCarrier());
-
-		update.setOnClickListener(new Button.OnClickListener() {
-
-			public void onClick(View v) {
-				try {
-					update();
-				} catch (Exception e) {
-				}
-			}
-		});
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

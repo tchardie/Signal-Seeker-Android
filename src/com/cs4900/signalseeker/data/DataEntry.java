@@ -3,7 +3,6 @@ package com.cs4900.signalseeker.data;
 import android.os.Bundle;
 
 public class DataEntry {
-	private String address = "";
 	private double latitude;
 	private double longitude;
     private int id;
@@ -22,14 +21,6 @@ public class DataEntry {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-   
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	public double getLatitude() {
@@ -82,16 +73,20 @@ public class DataEntry {
 
 	public String toXMLString() {
         StringBuilder sb = new StringBuilder("");
-        sb.append("<user>");
-        sb.append("<address>" + this.address + "</address>");
+        sb.append("<datum>");
         sb.append("<id type=\"integer\">"+this.id+"</id>");
-        sb.append("</user>");
+        sb.append("<latitude type=\"decimal\">"+this.latitude+"</latitude>");
+        sb.append("<longitude type=\"decimal\">"+this.longitude+"</longitude>");
+        sb.append("<location>"+this.location+"</location>");
+        sb.append("<wifi type=\"integer\">"+this.wifi+"</wifi>");
+        sb.append("<cell type=\"integer\">"+this.cell+"</cell>");
+        sb.append("<carrier>"+this.carrier+"</carrier>");
+        sb.append("</datum>");
         return sb.toString() + "\n";
     }
 	
 	public Bundle toBundle() {
         Bundle b = new Bundle();
-        b.putString("address", this.address);
         b.putDouble("latitude", latitude);
         b.putDouble("longitude", longitude);
         b.putString("location", location);
@@ -105,7 +100,6 @@ public class DataEntry {
 	
 	public static DataEntry fromBundle(Bundle b) {
         DataEntry ue = new DataEntry();
-        ue.setAddress(b.getString("address"));
         ue.setLatitude(b.getDouble("latitude"));
         ue.setLongitude(b.getDouble("longitude"));
         ue.setLocation(b.getString("location"));

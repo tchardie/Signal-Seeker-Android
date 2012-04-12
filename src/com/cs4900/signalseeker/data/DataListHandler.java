@@ -28,7 +28,7 @@ public class DataListHandler extends DefaultHandler {
 			this.uhandler = progresshandler;
 			Message msg = new Message();
 			msg.what = 0;
-			msg.obj = ("Processing User List");
+			msg.obj = ("Processing Data List");
 			this.uhandler.sendMessage(msg);
 		}
 	}
@@ -52,11 +52,11 @@ public class DataListHandler extends DefaultHandler {
 			this.uhandler.sendMessage(msg);
 		}
 
-		// initialize our UserLIst object - this will hold our parsed
+		// initialize our DataLIst object - this will hold our parsed
 		// contents
 		this.list = new DataList(this.context);
 
-		// initialize the UserEntry object
+		// initialize the DataEntry object
 		this.entry = new DataEntry();
 
 	}
@@ -103,7 +103,7 @@ public class DataListHandler extends DefaultHandler {
 
 		if (localName.equals("datum")) {
 			// add our entry to the list!
-			this.list.addUserEntry(this.entry);
+			this.list.addDataEntry(this.entry);
 			Message msg = new Message();
 			msg.what = 0;
 			msg.obj = ("Storing entry # " + this.entry.getId());
@@ -118,10 +118,7 @@ public class DataListHandler extends DefaultHandler {
 			this.entry.setId(Integer.parseInt(this.sb.toString()));
 			return;
 		}
-		if (localName.equals("address")) {
-			this.entry.setAddress(this.sb.toString());
-			return;
-		}
+		
 		if(localName.equals("latitude")) {
 			this.entry.setLatitude(Double.parseDouble(this.sb.toString()));
 			return;
@@ -152,7 +149,7 @@ public class DataListHandler extends DefaultHandler {
 	@Override
 	public void characters(char ch[], int start, int length) {
 		String theString = new String(ch, start, length);
-		// Log.d(Constants.LOGTAG, " " + UserListHandler.CLASSTAG +
+		// Log.d(Constants.LOGTAG, " " + DataListHandler.CLASSTAG +
 		// "characters[" + theString + "]");
 		this.sb.append(theString);
 	}

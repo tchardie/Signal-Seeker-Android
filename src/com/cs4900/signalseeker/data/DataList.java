@@ -20,64 +20,64 @@ import android.util.Log;
 public class DataList {
 	private static final String CLASSTAG = DataList.class.getSimpleName();
 	private Context context = null;
-	private List<DataEntry> userList;
+	private List<DataEntry> dataList;
 
 	public DataList(Context c) {
 		this.context = c;
-		this.userList = new Vector<DataEntry>(0);
+		this.dataList = new Vector<DataEntry>(0);
 	}
 
-	int addUserEntry(DataEntry userEntry) {
-		this.userList.add(userEntry);
-		return this.userList.size();
+	int addDataEntry(DataEntry dataEntry) {
+		this.dataList.add(dataEntry);
+		return this.dataList.size();
 	}
 
-	DataEntry getUserEntry(int location) {
-		return this.userList.get(location);
+	DataEntry getDataEntry(int location) {
+		return this.dataList.get(location);
 	}
 
-	public List<DataEntry> getAllUserEntries() {
-		return this.userList;
+	public List<DataEntry> getAllDataEntries() {
+		return this.dataList;
 	}
 
-	int getUserEntryCount() {
-		return this.userList.size();
+	int getDataEntryCount() {
+		return this.dataList.size();
 	}
 
-	public void replace(DataEntry newUserEntry) {
+	public void replace(DataEntry newDataEntry) {
 		try {
 			DataList newlist = new DataList(this.context);
-			for (int i = 0; i < getUserEntryCount(); i++) {
-				DataEntry ue = getUserEntry(i);
-				if (ue.getId() == newUserEntry.getId()) {
+			for (int i = 0; i < getDataEntryCount(); i++) {
+				DataEntry ue = getDataEntry(i);
+				if (ue.getId() == newDataEntry.getId()) {
 					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
-							+ "Replacing UserEntry");
-					newlist.addUserEntry(newUserEntry);
+							+ "Replacing DataEntry");
+					newlist.addDataEntry(newDataEntry);
 				} else {
-					newlist.addUserEntry(ue);
+					newlist.addDataEntry(ue);
 				}
 			}
-			this.userList = newlist.userList;
+			this.dataList = newlist.dataList;
 			persist();
 		} catch (Exception e) {
 
 		}
 	}
 
-	public void delete(DataEntry UserEntry) {
+	public void delete(DataEntry DataEntry) {
 		try {
 			DataList newlist = new DataList(this.context);
-			for (int i = 0; i < getUserEntryCount(); i++) {
-				DataEntry ue = getUserEntry(i);
-				if (ue.getId() == (UserEntry.getId())) {
+			for (int i = 0; i < getDataEntryCount(); i++) {
+				DataEntry ue = getDataEntry(i);
+				if (ue.getId() == (DataEntry.getId())) {
 					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
-							+ "Deleting UserEntry");
+							+ "Deleting DataEntry");
 
 				} else {
-					newlist.addUserEntry(ue);
+					newlist.addDataEntry(ue);
 				}
 			}
-			this.userList = newlist.userList;
+			this.dataList = newlist.dataList;
 			persist();
 		} catch (Exception e) {
 
@@ -87,21 +87,21 @@ public class DataList {
 	// Under the online mode, the product id is created on the server not on the
 	// client.
 	// This method needs to be updated accordingly later...
-	public void create(DataEntry UserEntry) {
+	public void create(DataEntry DataEntry) {
 		try {
 			int maxid = 0;
 			DataList newlist = new DataList(this.context);
-			for (int i = 0; i < getUserEntryCount(); i++) {
-				DataEntry ue = getUserEntry(i);
-				if (ue.getId() > maxid)
+			for (int i = 0; i < getDataEntryCount(); i++) {
+				DataEntry ue = getDataEntry(i);
+				if ((ue.getId()) > maxid)
 					maxid = ue.getId();
 
-				newlist.addUserEntry(ue);
+				newlist.addDataEntry(ue);
 			}
-			UserEntry.setId(new Integer(maxid + 1));
-			newlist.addUserEntry(UserEntry);
+			DataEntry.setId(new Integer(maxid + 1));
+			newlist.addDataEntry(DataEntry);
 
-			this.userList = newlist.userList;
+			this.dataList = newlist.dataList;
 			persist();
 		} catch (Exception e) {
 
@@ -112,12 +112,12 @@ public class DataList {
 	public void persist() {
 		try {
 			FileOutputStream fos = this.context.openFileOutput(
-					Constants.USER_XML_FILE, Context.MODE_PRIVATE);
-			fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
+					Constants.DATA_XML_FILE, Context.MODE_PRIVATE);
+			fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 					.getBytes());
 			fos.write("<data>\n".getBytes());
-			for (int i = 0; i < getUserEntryCount(); i++) {
-				DataEntry ce = getUserEntry(i);
+			for (int i = 0; i < getDataEntryCount(); i++) {
+				DataEntry ce = getDataEntry(i);
 				fos.write(ce.toXMLString().getBytes());
 			}
 			fos.write("</data>\n".getBytes());
@@ -169,11 +169,11 @@ public class DataList {
 			// clean up
 			fis.close();
 
-			// return our new Userlist
+			// return our new Datalist
 			return clHandler.getList();
 		} catch (Exception e) {
 			Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
-					+ "Error parsing User list xml file: " + e.getMessage());
+					+ "Error parsing Data list xml file: " + e.getMessage());
 			return null;
 		}
 	}

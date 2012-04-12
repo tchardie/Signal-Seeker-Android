@@ -81,7 +81,7 @@ public class EntryPage extends MapActivity {
 				R.drawable.point);
 		CustomizedOverlay itemizedOverlay = new CustomizedOverlay(drawable,
 				this);
-		list = DataList.parse(this).getAllUserEntries();
+		list = DataList.parse(this).getAllDataEntries();
 		OverlayItem overlayItem = new OverlayItem(point, "1", "2");
 		itemizedOverlay.addOverlay(overlayItem);
 

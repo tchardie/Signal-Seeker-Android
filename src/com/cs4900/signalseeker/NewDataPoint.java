@@ -91,8 +91,7 @@ public class NewDataPoint extends Activity {
 						newDataEntry.setCell(cellSpinner.getSelectedItemPosition());
 						dataList = DataList.parse(NewDataPoint.this);
 						dataList.create(newDataEntry);
-						Intent intent = new Intent(NewDataPoint.this, EntryPage.class);
-						startActivity(intent);
+						finish();
 					}
 
 				} catch (Exception e) {

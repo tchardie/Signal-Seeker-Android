@@ -20,7 +20,7 @@
 
     <EditText
         android:id="@+id/latitude"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="" />
 
@@ -33,7 +33,7 @@
 
     <EditText
         android:id="@+id/longitude"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="" />
 
@@ -46,7 +46,7 @@
 
     <EditText
         android:id="@+id/carrier"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="" />
 
@@ -59,7 +59,7 @@
 
     <EditText
         android:id="@+id/wifi"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="" />
 
@@ -72,7 +72,7 @@
 
     <EditText
         android:id="@+id/cell"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="" />
 

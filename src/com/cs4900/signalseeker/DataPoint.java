@@ -1,10 +1,13 @@
 package com.cs4900.signalseeker;
 
 import com.cs4900.signalseeker.data.DataEntry;
+import com.cs4900.signalseeker.data.DataList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 
 public class DataPoint extends Activity{
 	DataEntry entry;
+	DataList dataList;
 	
 	TextView location;
 	EditText latitude;
@@ -58,7 +62,23 @@ public class DataPoint extends Activity{
 		});
 	}
 	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(0, 0, 0, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_delete);
+		return true;
+	}
+	
 	public void update(){
+		entry.set_location(location.getText().toString());
+		entry.set_latitude(Double.parseDouble(latitude.getText().toString()));
+		entry.set_longitude(Double.parseDouble(longitude.getText().toString()));
+		entry.set_wifi(Integer.parseInt(wifi.getText().toString()));
+		entry.set_cell(Integer.parseInt(cell.getText().toString()));
+		entry.set_carrier(carrier.getText().toString());
 		
+		dataList = DataList.parse(DataPoint.this);
+		dataList.replace(entry);
+		
+		finish();
 	}
 }

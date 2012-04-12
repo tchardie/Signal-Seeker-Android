@@ -115,12 +115,12 @@ public class DataList {
 					Constants.USER_XML_FILE, Context.MODE_PRIVATE);
 			fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
 					.getBytes());
-			fos.write("<products>\n".getBytes());
+			fos.write("<data>\n".getBytes());
 			for (int i = 0; i < getUserEntryCount(); i++) {
 				DataEntry ce = getUserEntry(i);
 				fos.write(ce.toXMLString().getBytes());
 			}
-			fos.write("</products>\n".getBytes());
+			fos.write("</data>\n".getBytes());
 			fos.flush();
 			fos.close();
 		} catch (Exception e) {

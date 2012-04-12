@@ -37,7 +37,7 @@ public class DataAdapter extends BaseAdapter {
 			public int compare(Object o1, Object o2) {
 				DataEntry ce1 = (DataEntry) o1;
 				DataEntry ce2 = (DataEntry) o2;
-				return ce1.get_location().compareToIgnoreCase(ce2.get_location());
+				return ce1.getLocation().compareToIgnoreCase(ce2.getLocation());
 			}
 
 		});
@@ -60,8 +60,8 @@ public class DataAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		DataEntry re = this.list.get(position);
-		return new listListView(this.context, re.get_location().toString(),
-				String.valueOf(re.get_latitude()), String.valueOf(re.get_longitude()));
+		return new listListView(this.context, re.getLocation().toString(),
+				String.valueOf(re.getLatitude()), String.valueOf(re.getLongitude()));
 	}
 
 	/**

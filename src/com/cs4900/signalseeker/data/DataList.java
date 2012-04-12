@@ -19,37 +19,37 @@ import android.util.Log;
 
 public class DataList {
 	private static final String CLASSTAG = DataList.class.getSimpleName();
-	private Context _context = null;
-	private List<DataEntry> _userList;
+	private Context context = null;
+	private List<DataEntry> userList;
 
 	public DataList(Context c) {
-		this._context = c;
-		this._userList = new Vector<DataEntry>(0);
+		this.context = c;
+		this.userList = new Vector<DataEntry>(0);
 	}
 
 	int addUserEntry(DataEntry userEntry) {
-		this._userList.add(userEntry);
-		return this._userList.size();
+		this.userList.add(userEntry);
+		return this.userList.size();
 	}
 
 	DataEntry getUserEntry(int location) {
-		return this._userList.get(location);
+		return this.userList.get(location);
 	}
 
 	public List<DataEntry> getAllUserEntries() {
-		return this._userList;
+		return this.userList;
 	}
 
 	int getUserEntryCount() {
-		return this._userList.size();
+		return this.userList.size();
 	}
 
 	public void replace(DataEntry newUserEntry) {
 		try {
-			DataList newlist = new DataList(this._context);
+			DataList newlist = new DataList(this.context);
 			for (int i = 0; i < getUserEntryCount(); i++) {
 				DataEntry ue = getUserEntry(i);
-				if (ue.get_id() == newUserEntry.get_id()) {
+				if (ue.getId() == newUserEntry.getId()) {
 					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
 							+ "Replacing UserEntry");
 					newlist.addUserEntry(newUserEntry);
@@ -57,7 +57,7 @@ public class DataList {
 					newlist.addUserEntry(ue);
 				}
 			}
-			this._userList = newlist._userList;
+			this.userList = newlist.userList;
 			persist();
 		} catch (Exception e) {
 
@@ -66,10 +66,10 @@ public class DataList {
 
 	public void delete(DataEntry UserEntry) {
 		try {
-			DataList newlist = new DataList(this._context);
+			DataList newlist = new DataList(this.context);
 			for (int i = 0; i < getUserEntryCount(); i++) {
 				DataEntry ue = getUserEntry(i);
-				if (ue.get_id() == (UserEntry.get_id())) {
+				if (ue.getId() == (UserEntry.getId())) {
 					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
 							+ "Deleting UserEntry");
 
@@ -77,7 +77,7 @@ public class DataList {
 					newlist.addUserEntry(ue);
 				}
 			}
-			this._userList = newlist._userList;
+			this.userList = newlist.userList;
 			persist();
 		} catch (Exception e) {
 
@@ -89,19 +89,19 @@ public class DataList {
 	// This method needs to be updated accordingly later...
 	public void create(DataEntry UserEntry) {
 		try {
-			int max_id = 0;
-			DataList newlist = new DataList(this._context);
+			int maxid = 0;
+			DataList newlist = new DataList(this.context);
 			for (int i = 0; i < getUserEntryCount(); i++) {
 				DataEntry ue = getUserEntry(i);
-				if (ue.get_id() > max_id)
-					max_id = ue.get_id();
+				if (ue.getId() > maxid)
+					maxid = ue.getId();
 
 				newlist.addUserEntry(ue);
 			}
-			UserEntry.set_id(new Integer(max_id + 1));
+			UserEntry.setId(new Integer(maxid + 1));
 			newlist.addUserEntry(UserEntry);
 
-			this._userList = newlist._userList;
+			this.userList = newlist.userList;
 			persist();
 		} catch (Exception e) {
 
@@ -111,7 +111,7 @@ public class DataList {
 	// Write to the XML file
 	public void persist() {
 		try {
-			FileOutputStream fos = this._context.openFileOutput(
+			FileOutputStream fos = this.context.openFileOutput(
 					Constants.USER_XML_FILE, Context.MODE_PRIVATE);
 			fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
 					.getBytes());

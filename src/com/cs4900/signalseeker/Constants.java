@@ -1,7 +1,9 @@
 package com.cs4900.signalseeker;
 
 public class Constants {
+	public static final String INTENT_ACTION_MAIN = "android.intent.action.MAIN";
 	public static final String INTENT_ACTION_SETTINGS = "com.cs4900.signalseeker.SETTINGS";
+	public static final String INTENT_ACTION_NEW_DATA_POINT = "com.cs4900.signalseeker.NEW_DATA_POINT";
 	//public static final String INTENT_ACTION_NEW_USER = "com.cs4900.signalseeker.";
 
 	public static final String LOGTAG = "Signal_Seeker";

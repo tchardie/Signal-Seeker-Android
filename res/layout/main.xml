@@ -2,53 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="6dp" >
 
-    <TextView
+   <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dip"
+        android:paddingLeft="16dp"
+        android:layout_marginBottom="6dp"
         android:text="@string/signal_seeker_logo" />
 
-    <!--
-         <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
-    -->
-
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
-        android:padding="10dip" >
+        android:layout_height="fill_parent" >
 
         <com.google.android.maps.MapView
             android:id="@+id/mapview"
-            android:layout_width="280dip"
-            android:layout_height="400dip"
-            android:apiKey="0oSpuYBmxBb8vfPGw7cEYjstPfOvy7bVjPrV8_g"
-            android:clickable="true"
-            android:enabled="true" />
-
-        <EditText
-            android:id="@+id/new_location"
-            style="@style/edit_text"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/mapview"
-            android:layout_marginBottom="20dip"
-            android:layout_marginLeft="10dip" />
+            android:layout_height="400dp"
+            android:apiKey="0pDf1G2GgR3C4M-ZFPjNS9LszRZrnxrpoRkOMOw"
+            android:clickable="true"
+            android:state_enabled="true" >
+        </com.google.android.maps.MapView>
 
         <Button
             android:id="@+id/entry_add_button"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/new_location"
-            android:layout_marginBottom="5dip"
-            android:layout_marginLeft="10dip"
+            android:layout_below="@id/mapview"
+            android:layout_marginTop="6dp"
             android:text="@string/entry_add_button_label" />
     </RelativeLayout>
-    <!-- </LinearLayout> -->
 
 </LinearLayout>

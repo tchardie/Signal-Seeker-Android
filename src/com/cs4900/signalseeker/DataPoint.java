@@ -14,10 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class DataPoint extends Activity{
+public class DataPoint extends Activity {
 	DataEntry entry;
 	DataList dataList;
-	
+
 	TextView location;
 	EditText latitude;
 	EditText longitude;
@@ -25,33 +25,33 @@ public class DataPoint extends Activity{
 	EditText cell;
 	EditText carrier;
 	Button update;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.datapoint);
-		
-		location = (TextView) findViewById(R.id.location);
-		latitude = (EditText) findViewById(R.id.latitude);
-		longitude = (EditText) findViewById(R.id.longitude);
-		carrier = (EditText) findViewById(R.id.carrier);
-		wifi = (EditText) findViewById(R.id.wifi);
-		cell = (EditText) findViewById(R.id.cell);
-		
+
+		location = (TextView) findViewById(R.id.update_location);
+		latitude = (EditText) findViewById(R.id.update_latitude);
+		longitude = (EditText) findViewById(R.id.update_longitude);
+		carrier = (EditText) findViewById(R.id.update_carrier);
+		wifi = (EditText) findViewById(R.id.update_wifi);
+		cell = (EditText) findViewById(R.id.update_cell);
 		update = (Button) findViewById(R.id.Update);
-		
+
 	}
-	
-	public void onResume(){
+
+	public void onResume() {
 		super.onResume();
-		
+
 		entry = DataEntry.fromBundle(getIntent().getExtras());
-		location.setText(entry.get_location());
-		latitude.setText(String.valueOf(entry.get_latitude()));
-		longitude.setText(String.valueOf(entry.get_longitude()));
-		wifi.setText(String.valueOf(entry.get_wifi()));
-		cell.setText(String.valueOf(entry.get_cell()));
-		carrier.setText(entry.get_carrier());
-		
+		location.setText(entry.getLocation());
+		latitude.setText(String.valueOf(entry.getLatitude()));
+		longitude.setText(String.valueOf(entry.getLongitude()));
+		wifi.setText(String.valueOf(entry.getWifi()));
+		cell.setText(String.valueOf(entry.getCell()));
+		carrier.setText(entry.getCarrier());
+
 		update.setOnClickListener(new Button.OnClickListener() {
 
 			public void onClick(View v) {
@@ -62,12 +62,14 @@ public class DataPoint extends Activity{
 			}
 		});
 	}
-	
+
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, 0, 0, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
+		menu.add(0, 0, 0, R.string.delete).setIcon(
+				android.R.drawable.ic_menu_delete);
 		return true;
 	}
+
 	public boolean onMenuItemSelected(int id, MenuItem item) {
 		dataList = DataList.parse(DataPoint.this);
 		dataList.replace(entry);
@@ -75,18 +77,18 @@ public class DataPoint extends Activity{
 		startActivity(intent);
 		return true;
 	}
-	
-	public void update(){
-		entry.set_location(location.getText().toString());
-		entry.set_latitude(Double.parseDouble(latitude.getText().toString()));
-		entry.set_longitude(Double.parseDouble(longitude.getText().toString()));
-		entry.set_wifi(Integer.parseInt(wifi.getText().toString()));
-		entry.set_cell(Integer.parseInt(cell.getText().toString()));
-		entry.set_carrier(carrier.getText().toString());
-		
+
+	public void update() {
+		entry.setLocation(location.getText().toString());
+		entry.setLatitude(Double.parseDouble(latitude.getText().toString()));
+		entry.setLongitude(Double.parseDouble(longitude.getText().toString()));
+		entry.setWifi(Integer.parseInt(wifi.getText().toString()));
+		entry.setCell(Integer.parseInt(cell.getText().toString()));
+		entry.setCarrier(carrier.getText().toString());
+
 		dataList = DataList.parse(DataPoint.this);
 		dataList.replace(entry);
-		
+
 		finish();
 	}
 }

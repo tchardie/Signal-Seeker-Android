@@ -2,85 +2,81 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="6dp" >
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/update_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Large Text"
+        android:layout_marginBottom="6dp"
+        android:text="Update Point"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/lbl_lat"
+        android:id="@+id/latitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="latitude" />
+        android:text="Latitude"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/latitude"
+        android:id="@+id/update_latitude"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/lbl_lon"
+        android:id="@+id/longitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="longitude" />
+        android:text="Longitude"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/longitude"
+        android:id="@+id/update_longitude"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/lbl_carrier"
+        android:id="@+id/carrier_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="carrier" />
+        android:text="Carrier"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/carrier"
+        android:id="@+id/update_carrier"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/lbl_wifi"
+        android:id="@+id/wifi_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="wifi" />
+        android:text="Wifi"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/wifi"
+        android:id="@+id/update_wifi"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/lbl_cell"
+        android:id="@+id/cell_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="cell" />
+        android:text="Cell"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
-        android:id="@+id/cell"
+        android:id="@+id/update_cell"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/Update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Update" />
-    
 
 </LinearLayout>

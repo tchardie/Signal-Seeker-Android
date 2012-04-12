@@ -16,14 +16,14 @@ public class DataListHandler extends DefaultHandler {
 	private static final String CLASSTAG = DataListHandler.class
 			.getSimpleName();
 	Handler uhandler = null;
-	DataList _list;
-	DataEntry _entry;
-	String _lastElementName = "";
+	DataList list;
+	DataEntry entry;
+	String lastElementName = "";
 	StringBuilder sb = null;
-	Context _context;
+	Context context;
 
 	public DataListHandler(Context c, Handler progresshandler) {
-		this._context = c;
+		this.context = c;
 		if (progresshandler != null) {
 			this.uhandler = progresshandler;
 			Message msg = new Message();
@@ -40,7 +40,7 @@ public class DataListHandler extends DefaultHandler {
 		if (this.uhandler != null) {
 			this.uhandler.sendMessage(msg);
 		}
-		return this._list;
+		return this.list;
 	}
 
 	@Override
@@ -54,10 +54,10 @@ public class DataListHandler extends DefaultHandler {
 
 		// initialize our UserLIst object - this will hold our parsed
 		// contents
-		this._list = new DataList(this._context);
+		this.list = new DataList(this.context);
 
 		// initialize the UserEntry object
-		this._entry = new DataEntry();
+		this.entry = new DataEntry();
 
 	}
 
@@ -88,7 +88,7 @@ public class DataListHandler extends DefaultHandler {
 					this.uhandler.sendMessage(msg);
 				}
 
-				this._entry = new DataEntry();
+				this.entry = new DataEntry();
 
 			}
 		} catch (Exception ee) {
@@ -103,10 +103,10 @@ public class DataListHandler extends DefaultHandler {
 
 		if (localName.equals("datum")) {
 			// add our entry to the list!
-			this._list.addUserEntry(this._entry);
+			this.list.addUserEntry(this.entry);
 			Message msg = new Message();
 			msg.what = 0;
-			msg.obj = ("Storing entry # " + this._entry.get_id());
+			msg.obj = ("Storing entry # " + this.entry.getId());
 			if (this.uhandler != null) {
 				this.uhandler.sendMessage(msg);
 			}
@@ -115,35 +115,35 @@ public class DataListHandler extends DefaultHandler {
 		}
 
 		if (localName.equals("id")) {
-			this._entry.set_id(Integer.parseInt(this.sb.toString()));
+			this.entry.setId(Integer.parseInt(this.sb.toString()));
 			return;
 		}
 		if (localName.equals("address")) {
-			this._entry.set_address(this.sb.toString());
+			this.entry.setAddress(this.sb.toString());
 			return;
 		}
 		if(localName.equals("latitude")) {
-			this._entry.set_latitude(Double.parseDouble(this.sb.toString()));
+			this.entry.setLatitude(Double.parseDouble(this.sb.toString()));
 			return;
 		}
 		if(localName.equals("longitude")) {
-			this._entry.set_longitude(Double.parseDouble(this.sb.toString()));
+			this.entry.setLongitude(Double.parseDouble(this.sb.toString()));
 			return;
 		}
 		if(localName.equals("wifi")) {
-			this._entry.set_wifi(Integer.parseInt(this.sb.toString()));
+			this.entry.setWifi(Integer.parseInt(this.sb.toString()));
 			return;
 		}
 		if(localName.equals("cell")) {
-			this._entry.set_cell(Integer.parseInt(this.sb.toString()));
+			this.entry.setCell(Integer.parseInt(this.sb.toString()));
 			return;
 		}
 		if(localName.equals("carrier")) {
-			this._entry.set_carrier(this.sb.toString());
+			this.entry.setCarrier(this.sb.toString());
 			return;
 		}
 		if(localName.equals("location")) {
-			this._entry.set_location(this.sb.toString());
+			this.entry.setLocation(this.sb.toString());
 			return;
 		}
 

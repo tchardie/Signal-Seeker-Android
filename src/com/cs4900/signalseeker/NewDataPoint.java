@@ -22,17 +22,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class NewDataPoint extends Activity {
-
+	double latitude;
+	double longitude;
+	
+	
 	protected static final String CLASSTAG = NewDataPoint.class.getSimpleName();
 
 	private DataEntry newDataEntry;
 	private DataList dataList;
 
 	private EditText locationEditText;
-	// private TextView latitudeTextView;
-	private EditText latitudeEditText;
-	// private TextView longitudeTextView;
-	private EditText longitudeEditText;
+	private TextView latitudeTextView;
+	// private EditText latitudeEditText;
+	private TextView longitudeTextView;
+	// private EditText longitudeEditText;
 	private TextView carrierTextView;
 	private TextView wifiTextView;
 	// private TextView cellTextView;
@@ -44,19 +47,19 @@ public class NewDataPoint extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newdatapoint);
-		
+
 		newDataEntry = new DataEntry();
 
 		initializeNewDataPoint();
 
 		locationEditText = (EditText) findViewById(R.id.new_location);
 
-		// latitudeTextView = (TextView) findViewById(R.id.new_latitude);
-		// latitudeTextView.setText("" + newDataEntry.getLatitude());
-		latitudeEditText = (EditText) findViewById(R.id.new_latitude);
-		// longitudeTextView = (TextView) findViewById(R.id.new_longitude);
-		// longitudeTextView.setText("" + newDataEntry.getLongitude());
-		longitudeEditText = (EditText) findViewById(R.id.new_longitude);
+		latitudeTextView = (TextView) findViewById(R.id.new_latitude);
+		latitudeTextView.setText("" + newDataEntry.getLatitude());
+		// latitudeEditText = (EditText) findViewById(R.id.new_latitude);
+		longitudeTextView = (TextView) findViewById(R.id.new_longitude);
+		longitudeTextView.setText("" + newDataEntry.getLongitude());
+		// longitudeEditText = (EditText) findViewById(R.id.new_longitude);
 
 		carrierTextView = (TextView) findViewById(R.id.new_carrier);
 		carrierTextView.setText(newDataEntry.getCarrier());
@@ -65,9 +68,11 @@ public class NewDataPoint extends Activity {
 		wifiTextView.setText("" + newDataEntry.getWifi());
 
 		cellSpinner = (Spinner) findViewById(R.id.new_cell_spinner);
-		ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.cell_signal_array,
-				android.R.layout.simple_spinner_item);
-		arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter
+				.createFromResource(this, R.array.cell_signal_array,
+						android.R.layout.simple_spinner_item);
+		arrayAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		cellSpinner.setAdapter(arrayAdapter);
 
 		submitButton = (Button) findViewById(R.id.submit_button);
@@ -75,27 +80,26 @@ public class NewDataPoint extends Activity {
 
 			public void onClick(View v) {
 				try {
-					if (locationEditText.getText().toString().equals("") || latitudeEditText.getText().toString().equals("")
-							|| longitudeEditText.getText().toString().equals("") || cellSpinner.getSelectedItem() == null) {
-
+					if (locationEditText.getText().toString().equals("")) {
 						Context context = getApplicationContext();
 						CharSequence text = "There are empty fields. Cannot submit!";
 						int duration = Toast.LENGTH_SHORT;
 						Toast toast = Toast.makeText(context, text, duration);
 						toast.show();
-					}
-					else {
-						newDataEntry.setLocation(locationEditText.getText().toString());
-						newDataEntry.setLatitude(Double.parseDouble(latitudeEditText.getText().toString()));
-						newDataEntry.setLongitude(Double.parseDouble(longitudeEditText.getText().toString()));
-						newDataEntry.setCell(cellSpinner.getSelectedItemPosition());
+					} else {
+						newDataEntry.setLocation(locationEditText.getText()
+								.toString());
+						newDataEntry.setCell(cellSpinner
+								.getSelectedItemPosition());
 						dataList = DataList.parse(NewDataPoint.this);
 						dataList.create(newDataEntry);
 						finish();
 					}
 
 				} catch (Exception e) {
-					Log.i(Constants.LOGTAG + ": " + EntryPage.CLASSTAG, "Failed to Submit new Data Point" + e.getMessage() + "]");
+					Log.i(Constants.LOGTAG + ": " + EntryPage.CLASSTAG,
+							"Failed to Submit new Data Point" + e.getMessage()
+									+ "]");
 				}
 			}
 		});
@@ -106,7 +110,34 @@ public class NewDataPoint extends Activity {
 
 		// GPS location
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		// Location location = locationManager.requestLocationUpdates();
+		
+		LocationListener locationListener = new LocationListener() {
+			public void onLocationChanged(Location location) {
+				// sets the long and lat
+				setLoc(location);
+			}
+
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
+			}
+
+			public void onProviderEnabled(String provider) {
+			}
+
+			public void onProviderDisabled(String provider) {
+			}
+		};
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				locationListener);
+		newDataEntry.setLatitude(latitude);
+		newDataEntry.setLongitude(longitude);
+		
+		//Location location = locationManager.
+
+//		newDataEntry.setLatitude(location.getLatitude());
+//		newDataEntry.setLongitude(location.getLongitude());
+		// Location location = locationManager.requestLocationUpdates(
+		// LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 		// newDataEntry.setLatitude(location.getLatitude());
 		// newDataEntry.setLongitude(location.getLongitude());
 
@@ -118,5 +149,10 @@ public class NewDataPoint extends Activity {
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		newDataEntry.setCarrier(telephonyManager.getNetworkOperatorName());
 
+	}
+	
+	public void setLoc(Location location){
+		this.latitude = location.getLatitude();
+		this.longitude = location.getLongitude();
 	}
 }

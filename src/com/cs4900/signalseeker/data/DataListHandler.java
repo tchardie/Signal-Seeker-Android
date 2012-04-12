@@ -142,6 +142,10 @@ public class DataListHandler extends DefaultHandler {
 			this._entry.set_carrier(this.sb.toString());
 			return;
 		}
+		if(localName.equals("location")) {
+			this._entry.set_location(this.sb.toString());
+			return;
+		}
 
 	}
 

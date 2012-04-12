@@ -60,7 +60,7 @@ public class DataAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		DataEntry re = this.list.get(position);
-		return new listListView(this.context, re.get_address().toString(),
+		return new listListView(this.context, re.get_location().toString(),
 				String.valueOf(re.get_latitude()), String.valueOf(re.get_longitude()));
 	}
 

@@ -26,6 +26,7 @@ public class DataListView extends ListActivity {
 		super.onCreate(savedInstanceState);
 		// this.setContentView(R.layout.datalistview);
 		this.empty = (TextView) findViewById(R.id.empty);
+		
 		final ListView listView = getListView();
 		listView.setItemsCanFocus(false);
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

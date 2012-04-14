@@ -71,7 +71,7 @@ public class DataPoint extends Activity {
 
 	public boolean onMenuItemSelected(int id, MenuItem item) {
 		dataList = DataList.parse(DataPoint.this);
-		dataList.replace(entry);
+		deleteData();
 		Intent intent = new Intent(this, DataListView.class);
 		startActivity(intent);
 		return true;
@@ -89,5 +89,10 @@ public class DataPoint extends Activity {
 		dataList.replace(entry);
 
 		finish();
+	}
+	
+	public void deleteData(){
+		dataList = DataList.parse(DataPoint.this);
+		dataList.delete(entry);
 	}
 }

@@ -69,12 +69,13 @@ public class DataList {
 			DataList newlist = new DataList(this.context);
 			for (int i = 0; i < getDataEntryCount(); i++) {
 				DataEntry ue = getDataEntry(i);
-				if (ue.getId() == (DataEntry.getId())) {
+				if (ue.getLocation().equals(DataEntry.getLocation())) {
 					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
 							+ "Deleting DataEntry");
 
 				} else {
 					newlist.addDataEntry(ue);
+					Log.d(Constants.LOGTAG, " "+DataList.CLASSTAG+"Entry Not Deleted");
 				}
 			}
 			this.dataList = newlist.dataList;

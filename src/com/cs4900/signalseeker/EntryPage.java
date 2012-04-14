@@ -12,8 +12,12 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,8 +31,8 @@ public class EntryPage extends MapActivity {
 
 	protected static final String CLASSTAG = EntryPage.class.getSimpleName();
 	// starting location
-	private double lat = 30.8469348;
-	private double lon = -83.2893965;
+	double lat = 30.8469348;
+	double lon = -83.2893965;
 
 	private MapView mapView;
 	private MapController mapController;
@@ -42,7 +46,9 @@ public class EntryPage extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
+		
+		setLoc();
+		
 		// make starting point
 		point = new GeoPoint((int) (lat * 1e6), (int) (lon * 1e6));
 
@@ -60,8 +66,9 @@ public class EntryPage extends MapActivity {
 
 			public void onClick(View v) {
 				try {
-					Intent intent = new Intent(
-							Constants.INTENT_ACTION_NEW_DATA_POINT);
+					Intent intent = new Intent(EntryPage.this, NewDataPoint.class);
+					intent.putExtra("lat", lat);
+					intent.putExtra("lon", lon);
 					startActivity(intent);
 
 				} catch (Exception e) {
@@ -77,24 +84,24 @@ public class EntryPage extends MapActivity {
 	public void onResume() {
 		super.onResume();
 		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = this.getResources().getDrawable(
-				R.drawable.point);
+		Drawable drawable = this.getResources().getDrawable(R.drawable.point);
 		CustomizedOverlay itemizedOverlay = new CustomizedOverlay(drawable,
 				this);
 		list = DataList.parse(this).getAllDataEntries();
 		OverlayItem overlayItem = new OverlayItem(point, "1", "2");
 		itemizedOverlay.addOverlay(overlayItem);
 
-		//mapOverlays.add(itemizedOverlay);
+		// mapOverlays.add(itemizedOverlay);
 
 		for (int i = 0; i < list.size(); i++) {
 			DataEntry d = list.get(i);
 			GeoPoint p = new GeoPoint((int) (d.getLatitude() * 1e6),
 					(int) (d.getLongitude() * 1e6));
-			OverlayItem o = new OverlayItem(p, d.getLocation(), String.valueOf(d.getWifi()));
+			OverlayItem o = new OverlayItem(p, d.getLocation(),
+					String.valueOf(d.getWifi()));
 			itemizedOverlay.addOverlay(o);
 		}
-		
+
 		mapOverlays.add(itemizedOverlay);
 
 	}
@@ -121,4 +128,30 @@ public class EntryPage extends MapActivity {
 		return true;
 	}
 
+	public void setLoc() {
+		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		LocationListener ll = new LocationListener(){
+
+			@Override
+			public void onLocationChanged(Location location) {
+				lat = location.getLatitude();
+				lon = location.getLongitude();
+			}
+
+			@Override
+			public void onProviderDisabled(String provider) {
+				Toast.makeText(EntryPage.this, "GPS Disabled", 2000).show();
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
+			}
+			
+		};
+	}
 }

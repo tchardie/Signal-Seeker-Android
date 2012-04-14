@@ -24,8 +24,7 @@ import android.widget.Toast;
 public class NewDataPoint extends Activity {
 	double latitude;
 	double longitude;
-	
-	
+
 	protected static final String CLASSTAG = NewDataPoint.class.getSimpleName();
 
 	private DataEntry newDataEntry;
@@ -55,12 +54,11 @@ public class NewDataPoint extends Activity {
 		locationEditText = (EditText) findViewById(R.id.new_location);
 
 		latitudeTextView = (TextView) findViewById(R.id.new_latitude);
-		latitudeTextView.setText("" + newDataEntry.getLatitude());
-		// latitudeEditText = (EditText) findViewById(R.id.new_latitude);
+		// latitudeTextView.setText("" + newDataEntry.getLatitude());
+		latitudeTextView.setText("" + getIntent().getDoubleExtra("lat", 0));
 		longitudeTextView = (TextView) findViewById(R.id.new_longitude);
-		longitudeTextView.setText("" + newDataEntry.getLongitude());
-		// longitudeEditText = (EditText) findViewById(R.id.new_longitude);
-
+		// longitudeTextView.setText("" + newDataEntry.getLongitude());
+		longitudeTextView.setText("" + getIntent().getDoubleExtra("lon", 0));
 		carrierTextView = (TextView) findViewById(R.id.new_carrier);
 		carrierTextView.setText(newDataEntry.getCarrier());
 
@@ -107,40 +105,10 @@ public class NewDataPoint extends Activity {
 	}
 
 	public void initializeNewDataPoint() {
-
-		// GPS location
-		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
-		LocationListener locationListener = new LocationListener() {
-			public void onLocationChanged(Location location) {
-				// sets the long and lat
-				setLoc(location);
-			}
-
-			public void onStatusChanged(String provider, int status,
-					Bundle extras) {
-			}
-
-			public void onProviderEnabled(String provider) {
-			}
-
-			public void onProviderDisabled(String provider) {
-			}
-		};
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-				locationListener);
-		newDataEntry.setLatitude(latitude);
-		newDataEntry.setLongitude(longitude);
+		newDataEntry.setLatitude(getIntent().getDoubleExtra("lat", 0));
+		newDataEntry.setLongitude(getIntent().getDoubleExtra("lon", 0));
 		
-		//Location location = locationManager.
-
-//		newDataEntry.setLatitude(location.getLatitude());
-//		newDataEntry.setLongitude(location.getLongitude());
-		// Location location = locationManager.requestLocationUpdates(
-		// LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-		// newDataEntry.setLatitude(location.getLatitude());
-		// newDataEntry.setLongitude(location.getLongitude());
-
 		// Wifi signal strength
 		WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		newDataEntry.setWifi(wifiManager.calculateSignalLevel(0, 5));
@@ -149,10 +117,5 @@ public class NewDataPoint extends Activity {
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		newDataEntry.setCarrier(telephonyManager.getNetworkOperatorName());
 
-	}
-	
-	public void setLoc(Location location){
-		this.latitude = location.getLatitude();
-		this.longitude = location.getLongitude();
 	}
 }

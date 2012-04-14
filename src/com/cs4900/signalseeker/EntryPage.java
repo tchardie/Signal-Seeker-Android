@@ -41,14 +41,16 @@ public class EntryPage extends MapActivity {
 	private List<DataEntry> list;
 	private GeoPoint point;
 
+	LocationManager lm;
+	LocationListener ll;
+	Location location;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-		setLoc();
-		
+
 		// make starting point
 		point = new GeoPoint((int) (lat * 1e6), (int) (lon * 1e6));
 
@@ -62,13 +64,20 @@ public class EntryPage extends MapActivity {
 		mapController.setCenter(point);
 
 		submitSignalButton = (Button) findViewById(R.id.entry_add_button);
+
+		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		ll = new MyLocationListener();
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+		location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		
 		submitSignalButton.setOnClickListener(new Button.OnClickListener() {
 
 			public void onClick(View v) {
 				try {
-					Intent intent = new Intent(EntryPage.this, NewDataPoint.class);
-					intent.putExtra("lat", lat);
-					intent.putExtra("lon", lon);
+					Intent intent = new Intent(EntryPage.this,
+							NewDataPoint.class);
+					intent.putExtra("lat", location.getLatitude());
+					intent.putExtra("lon", location.getLongitude());
 					startActivity(intent);
 
 				} catch (Exception e) {
@@ -128,30 +137,4 @@ public class EntryPage extends MapActivity {
 		return true;
 	}
 
-	public void setLoc() {
-		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		LocationListener ll = new LocationListener(){
-
-			@Override
-			public void onLocationChanged(Location location) {
-				lat = location.getLatitude();
-				lon = location.getLongitude();
-			}
-
-			@Override
-			public void onProviderDisabled(String provider) {
-				Toast.makeText(EntryPage.this, "GPS Disabled", 2000).show();
-			}
-
-			@Override
-			public void onProviderEnabled(String provider) {
-			}
-
-			@Override
-			public void onStatusChanged(String provider, int status,
-					Bundle extras) {
-			}
-			
-		};
-	}
 }

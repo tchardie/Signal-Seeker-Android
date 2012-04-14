@@ -49,7 +49,7 @@ public class DataList {
 			DataList newlist = new DataList(this.context);
 			for (int i = 0; i < getDataEntryCount(); i++) {
 				DataEntry ue = getDataEntry(i);
-				if (ue.getId() == newDataEntry.getId()) {
+				if (ue.getLocation().equals(newDataEntry.getLocation())) {
 					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
 							+ "Replacing DataEntry");
 					newlist.addDataEntry(newDataEntry);

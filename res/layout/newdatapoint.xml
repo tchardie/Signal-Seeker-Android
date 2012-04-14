@@ -53,7 +53,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/latitude_label"
-        android:layout_marginBottom="6dp" />
+        android:layout_marginBottom="6dp" />
     -->
 
     <TextView
@@ -74,7 +74,7 @@
         android:layout_below="@id/longitude_label"
         android:layout_marginBottom="6dp"
         android:layout_marginLeft="30dp"
-        android:layout_toRightOf="@id/new_latitude" />
+        android:layout_toRightOf="@id/new_latitude" />
     -->
 
 
@@ -86,7 +86,7 @@
         android:layout_marginBottom="6dp"
         android:text="Cell"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#575757" />
+        android:textColor="#575757" />
     -->
 
     <TextView
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/new_latitude"
         android:layout_below="@+id/new_latitude"
-        android:text="Wifi signal"
+        android:text="Carrier"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/new_wifi"
         android:layout_below="@+id/new_wifi"
-        android:text="Carrier"
+        android:text="Wifi Signal"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -133,6 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/carrier_label"
         android:layout_below="@+id/carrier_label"
+        android:layout_centerVertical="true"
         android:text="Carrier"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#575757" />
@@ -141,8 +142,6 @@
         android:id="@+id/cell_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/new_carrier"
-        android:layout_alignRight="@+id/location_label"
         android:layout_below="@+id/new_carrier"
         android:text="Cell signal"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -151,7 +150,7 @@
         android:id="@+id/new_cell_spinner"
         android:layout_width="99dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cell_label"
+        android:layout_alignLeft="@+id/new_carrier"
         android:layout_below="@+id/cell_label"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#575757" />
@@ -160,7 +159,7 @@
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/new_cell_spinner"
         android:layout_below="@+id/new_cell_spinner"
         android:text="Submit" />
 

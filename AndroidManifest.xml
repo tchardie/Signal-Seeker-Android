@@ -42,8 +42,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".DataListView" />
-        <activity android:name=".DataPoint" />
+        <activity
+            android:name=".DataListView"
+            android:label="@string/point_list" >
+        </activity>
+        <activity
+            android:name=".DataPoint"
+            android:label="@string/data_point" >
+        </activity>
 
         <uses-library android:name="com.google.android.maps" />
     </application>

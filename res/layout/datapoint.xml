@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:text="Update Point"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#4299CF" />
 
     <TextView
         android:id="@+id/latitude_label"
@@ -38,22 +39,10 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/carrier_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Carrier"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <EditText
-        android:id="@+id/update_carrier"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
         android:id="@+id/wifi_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wifi"
+        android:text="Wifi signal"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
@@ -62,16 +51,29 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/carrier_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carrier name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/update_carrier"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/cell_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cell"
+        android:text="Cell signal"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/update_cell"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp" />
 
     <Button
         android:id="@+id/Update"

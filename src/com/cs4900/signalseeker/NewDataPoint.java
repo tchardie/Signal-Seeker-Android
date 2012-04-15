@@ -32,12 +32,9 @@ public class NewDataPoint extends Activity {
 
 	private EditText locationEditText;
 	private TextView latitudeTextView;
-	// private EditText latitudeEditText;
 	private TextView longitudeTextView;
-	// private EditText longitudeEditText;
 	private TextView carrierTextView;
 	private TextView wifiTextView;
-	// private TextView cellTextView;
 	private Spinner cellSpinner;
 	private Button submitButton;
 
@@ -51,28 +48,33 @@ public class NewDataPoint extends Activity {
 
 		initializeNewDataPoint();
 
+		// Location view
 		locationEditText = (EditText) findViewById(R.id.new_location);
 
+		// Latitude view
 		latitudeTextView = (TextView) findViewById(R.id.new_latitude);
-		// latitudeTextView.setText("" + newDataEntry.getLatitude());
-		latitudeTextView.setText("" + getIntent().getDoubleExtra("lat", 0));
-		longitudeTextView = (TextView) findViewById(R.id.new_longitude);
-		// longitudeTextView.setText("" + newDataEntry.getLongitude());
-		longitudeTextView.setText("" + getIntent().getDoubleExtra("lon", 0));
-		carrierTextView = (TextView) findViewById(R.id.new_carrier);
-		carrierTextView.setText(newDataEntry.getCarrier());
+		latitudeTextView.setText("" + getIntent().getDoubleExtra("latitude", 0));
 
+		// Longitude view
+		longitudeTextView = (TextView) findViewById(R.id.new_longitude);
+		longitudeTextView.setText("" + getIntent().getDoubleExtra("longitude", 0));
+
+		// Wifi signal strength view
 		wifiTextView = (TextView) findViewById(R.id.new_wifi);
 		wifiTextView.setText("" + newDataEntry.getWifi());
 
+		// Carrier name view
+		carrierTextView = (TextView) findViewById(R.id.new_carrier);
+		carrierTextView.setText(newDataEntry.getCarrier());
+
+		// Carrier signal strength view
 		cellSpinner = (Spinner) findViewById(R.id.new_cell_spinner);
-		ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter
-				.createFromResource(this, R.array.cell_signal_array,
-						android.R.layout.simple_spinner_item);
-		arrayAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.cell_signal_array,
+				android.R.layout.simple_spinner_item);
+		arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		cellSpinner.setAdapter(arrayAdapter);
 
+		// Submit button view
 		submitButton = (Button) findViewById(R.id.submit_button);
 		submitButton.setOnClickListener(new Button.OnClickListener() {
 
@@ -84,20 +86,17 @@ public class NewDataPoint extends Activity {
 						int duration = Toast.LENGTH_SHORT;
 						Toast toast = Toast.makeText(context, text, duration);
 						toast.show();
-					} else {
-						newDataEntry.setLocation(locationEditText.getText()
-								.toString());
-						newDataEntry.setCell(cellSpinner
-								.getSelectedItemPosition());
+					}
+					else {
+						newDataEntry.setLocation(locationEditText.getText().toString());
+						newDataEntry.setCell(cellSpinner.getSelectedItemPosition());
 						dataList = DataList.parse(NewDataPoint.this);
 						dataList.create(newDataEntry);
 						finish();
 					}
 
 				} catch (Exception e) {
-					Log.i(Constants.LOGTAG + ": " + EntryPage.CLASSTAG,
-							"Failed to Submit new Data Point" + e.getMessage()
-									+ "]");
+					Log.i(Constants.LOGTAG + ": " + EntryPage.CLASSTAG, "Failed to Submit new Data Point" + e.getMessage() + "]");
 				}
 			}
 		});
@@ -105,10 +104,10 @@ public class NewDataPoint extends Activity {
 	}
 
 	public void initializeNewDataPoint() {
-		
-		newDataEntry.setLatitude(getIntent().getDoubleExtra("lat", 0));
-		newDataEntry.setLongitude(getIntent().getDoubleExtra("lon", 0));
-		
+
+		newDataEntry.setLatitude(getIntent().getDoubleExtra("latitude", 0));
+		newDataEntry.setLongitude(getIntent().getDoubleExtra("longitude", 0));
+
 		// Wifi signal strength
 		WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		newDataEntry.setWifi(wifiManager.calculateSignalLevel(0, 5));

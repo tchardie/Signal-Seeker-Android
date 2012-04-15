@@ -30,16 +30,12 @@ import android.widget.Toast;
 public class EntryPage extends MapActivity {
 
 	protected static final String CLASSTAG = EntryPage.class.getSimpleName();
-	// starting location
-	double lat = 30.8469348;
-	double lon = -83.2893965;
 
 	private MapView mapView;
 	private MapController mapController;
 	private EditText locationText;
 	private Button submitSignalButton;
 	private List<DataEntry> list;
-	private GeoPoint point;
 
 	LocationManager lm;
 	LocationListener ll;
@@ -51,39 +47,33 @@ public class EntryPage extends MapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// make starting point
-		point = new GeoPoint((int) (lat * 1e6), (int) (lon * 1e6));
-
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
-		mapView.setSatellite(true);
+		mapView.setSatellite(false);
 
-		// center map on the point
 		mapController = mapView.getController();
-		mapController.setZoom(15);
-		mapController.setCenter(point);
+		mapController.setZoom(18);
+		GeoPoint vsuGeoPoint = new GeoPoint((int)(30.848466 * 1E6), (int)(-83.289569 * 1E6));
+		mapController.setCenter(vsuGeoPoint);
 
 		submitSignalButton = (Button) findViewById(R.id.entry_add_button);
 
-		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		ll = new MyLocationListener();
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
-		location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		
 		submitSignalButton.setOnClickListener(new Button.OnClickListener() {
 
 			public void onClick(View v) {
 				try {
-					Intent intent = new Intent(EntryPage.this,
-							NewDataPoint.class);
-					intent.putExtra("lat", location.getLatitude());
-					intent.putExtra("lon", location.getLongitude());
+					lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+					ll = new MyLocationListener();
+					lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+					location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+					
+					Intent intent = new Intent(EntryPage.this, NewDataPoint.class);
+					intent.putExtra("latitude", location.getLatitude());
+					intent.putExtra("longitude", location.getLongitude());
 					startActivity(intent);
 
 				} catch (Exception e) {
-					Log.i(Constants.LOGTAG + ": " + EntryPage.CLASSTAG,
-							"Failed to load New Data Point page"
-									+ e.getMessage() + "]");
+					Log.i(Constants.LOGTAG + ": " + EntryPage.CLASSTAG, "Failed to load New Data Point page" + e.getMessage() + "]");
 				}
 			}
 		});
@@ -92,26 +82,41 @@ public class EntryPage extends MapActivity {
 
 	public void onResume() {
 		super.onResume();
+		
+		mapView.getOverlays().clear();
 		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = this.getResources().getDrawable(R.drawable.point);
-		CustomizedOverlay itemizedOverlay = new CustomizedOverlay(drawable,
-				this);
-		list = DataList.parse(this).getAllDataEntries();
-		OverlayItem overlayItem = new OverlayItem(point, "1", "2");
-		itemizedOverlay.addOverlay(overlayItem);
+		
+		// Initialize wifi signal markers
+		Drawable drawable[] = new Drawable[5];
+		drawable[0] = this.getResources().getDrawable(R.drawable.point0);
+		drawable[1] = this.getResources().getDrawable(R.drawable.point1);
+		drawable[2] = this.getResources().getDrawable(R.drawable.point2);
+		drawable[3] = this.getResources().getDrawable(R.drawable.point3);
+		drawable[4] = this.getResources().getDrawable(R.drawable.point4);
+		
+		// Assign the markers to overlays
+		CustomizedOverlay itemizedOverlay[] = new CustomizedOverlay[5];
+		itemizedOverlay[0] = new CustomizedOverlay(drawable[0], this);
+		itemizedOverlay[1] = new CustomizedOverlay(drawable[1], this);
+		itemizedOverlay[2] = new CustomizedOverlay(drawable[2], this);
+		itemizedOverlay[3] = new CustomizedOverlay(drawable[3], this);
+		itemizedOverlay[4] = new CustomizedOverlay(drawable[4], this);
 
-		// mapOverlays.add(itemizedOverlay);
+
+		list = DataList.parse(this).getAllDataEntries();
 
 		for (int i = 0; i < list.size(); i++) {
-			DataEntry d = list.get(i);
-			GeoPoint p = new GeoPoint((int) (d.getLatitude() * 1e6),
-					(int) (d.getLongitude() * 1e6));
-			OverlayItem o = new OverlayItem(p, d.getLocation(),
-					String.valueOf(d.getWifi()));
-			itemizedOverlay.addOverlay(o);
+			DataEntry dataEntry = list.get(i);
+			GeoPoint geoPoint = new GeoPoint((int) (dataEntry.getLatitude() * 1e6), (int) (dataEntry.getLongitude() * 1e6));
+			OverlayItem overlayItem = new OverlayItem(geoPoint, dataEntry.getLocation(), "Wifi: " + String.valueOf(dataEntry.getWifi()));
+			itemizedOverlay[dataEntry.getWifi()].addOverlay(overlayItem);
 		}
 
-		mapOverlays.add(itemizedOverlay);
+		mapOverlays.add(itemizedOverlay[0]);
+		mapOverlays.add(itemizedOverlay[1]);
+		mapOverlays.add(itemizedOverlay[2]);
+		mapOverlays.add(itemizedOverlay[3]);
+		mapOverlays.add(itemizedOverlay[4]);
 
 	}
 
@@ -123,8 +128,7 @@ public class EntryPage extends MapActivity {
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, 0, 0, R.string.menu_settings).setIcon(
-				android.R.drawable.ic_menu_manage);
+		menu.add(0, 0, 0, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_manage);
 		return true;
 	}
 

@@ -3,6 +3,7 @@ package com.cs4900.signalseeker;
 import com.cs4900.signalseeker.data.DataEntry;
 import com.cs4900.signalseeker.data.DataList;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -103,6 +104,7 @@ public class NewDataPoint extends Activity {
 
 	}
 
+	@SuppressWarnings("static-access")
 	public void initializeNewDataPoint() {
 
 		newDataEntry.setLatitude(getIntent().getDoubleExtra("latitude", 0));
@@ -110,7 +112,8 @@ public class NewDataPoint extends Activity {
 
 		// Wifi signal strength
 		WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		newDataEntry.setWifi(wifiManager.calculateSignalLevel(0, 5));
+		int RSSI = wifiManager.getConnectionInfo().getRssi();
+		newDataEntry.setWifi(wifiManager.calculateSignalLevel(RSSI, 6));
 
 		// Carrier name
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);

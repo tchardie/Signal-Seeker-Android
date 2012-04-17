@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class EntryPage extends MapActivity {
 
@@ -72,6 +73,7 @@ public class EntryPage extends MapActivity {
 					startActivity(intent);
 
 				} catch (Exception e) {
+					Toast.makeText(EntryPage.this, "GPS Unavailable", 2000).show();
 					Log.i(Constants.LOGTAG + ": " + EntryPage.CLASSTAG, "Failed to load New Data Point page" + e.getMessage() + "]");
 				}
 			}

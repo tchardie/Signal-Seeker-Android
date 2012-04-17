@@ -1,5 +1,6 @@
 package com.cs4900.signalseeker.data;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -111,8 +112,17 @@ public class DataList {
 	// Write to the XML file
 	public void persist() {
 		try {
+			
+			/** This Region for emulator with xml file!!! **/
 			FileOutputStream fos = this.context.openFileOutput(
 					Constants.DATA_XML_FILE, Context.MODE_PRIVATE);
+			 
+			
+			/**Comment this for actual phone
+			File file = new File("/mnt/sdcard/data.xml");
+			file.createNewFile();
+			FileOutputStream fos = new FileOutputStream(file);
+			**/
 			fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 					.getBytes());
 			fos.write("<data>\n".getBytes());
@@ -132,9 +142,16 @@ public class DataList {
 	// Read from the XML file
 	public static DataList parse(Context context) {
 		try {
+			/** This line for emulator **/
 			FileInputStream fis = context
 					.openFileInput(Constants.DATA_XML_FILE);
-
+			
+			
+			/** this line for actual phone 
+			File file = new File("/mnt/sdcard/data.xml");
+			FileInputStream fis = new FileInputStream(file);
+			**/
+			
 			if (fis == null) {
 				return null;
 			}

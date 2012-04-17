@@ -50,7 +50,7 @@ public class EntryPage extends MapActivity {
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		mapView.setSatellite(false);
-
+		
 		mapController = mapView.getController();
 		mapController.setZoom(18);
 		GeoPoint vsuGeoPoint = new GeoPoint((int)(30.848466 * 1E6), (int)(-83.289569 * 1E6));
@@ -77,6 +77,8 @@ public class EntryPage extends MapActivity {
 				}
 			}
 		});
+		
+		
 
 	}
 

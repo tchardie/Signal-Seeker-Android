@@ -26,14 +26,14 @@ public class DataListView extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//this.setContentView(R.layout.datalistview);
-		
+		// this.setContentView(R.layout.datalistview);
+
 		empty = (TextView) findViewById(R.id.empty);
 
 		final ListView listView = getListView();
 		listView.setItemsCanFocus(false);
 		listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		listView.setEmptyView(empty);	
+		listView.setEmptyView(empty);
 	}
 
 	public void onResume() {
@@ -49,5 +49,11 @@ public class DataListView extends ListActivity {
 		Intent intent = new Intent(this, DataPoint.class);
 		intent.putExtras(list.get((int) id).toBundle());
 		startActivity(intent);
+	}
+
+	public void onBackPressed() {
+		Intent i = new Intent(this, EntryPage.class);
+		startActivity(i);
+		return;
 	}
 }

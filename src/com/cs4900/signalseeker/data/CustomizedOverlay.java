@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
+import com.cs4900.signalseeker.Constants;
+import com.cs4900.signalseeker.EntryPage;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
@@ -32,12 +35,18 @@ public class CustomizedOverlay extends ItemizedOverlay<OverlayItem> {
 	}
 
 	protected boolean onTap(int index) {
-		OverlayItem item = mapOverlays.get(index);
-		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-		dialog.setTitle(item.getTitle());
-		dialog.setMessage(item.getSnippet());
-		dialog.show();
-		return true;
+		try {
+			OverlayItem item = mapOverlays.get(index);
+			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+			dialog.setTitle(item.getTitle());
+			dialog.setMessage(item.getSnippet());
+			dialog.show();
+			return true;
+		} catch (Exception e) {
+			Log.i(Constants.LOGTAG + ": " + CustomizedOverlay.class,
+					"Failed to load New Data Point page" + e.getMessage() + "]");
+		}
+		return false;
 	}
 
 	public void addOverlay(OverlayItem overlay) {

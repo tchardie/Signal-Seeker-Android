@@ -25,7 +25,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class EntryPage extends MapActivity {
 
@@ -84,7 +83,7 @@ public class EntryPage extends MapActivity {
 
 	public void onResume() {
 		super.onResume();
-		
+			
 		mapView.getOverlays().clear();
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		
@@ -110,7 +109,11 @@ public class EntryPage extends MapActivity {
 		for (int i = 0; i < list.size(); i++) {
 			DataEntry dataEntry = list.get(i);
 			GeoPoint geoPoint = new GeoPoint((int) (dataEntry.getLatitude() * 1e6), (int) (dataEntry.getLongitude() * 1e6));
-			OverlayItem overlayItem = new OverlayItem(geoPoint, dataEntry.getLocation(), "Wifi: " + String.valueOf(dataEntry.getWifi()));
+			OverlayItem overlayItem = new OverlayItem(geoPoint, dataEntry.getLocation(), "Wifi signal: " + dataEntry.getWifi() + "\n"
+																					   + "Latitude: " + dataEntry.getLatitude() + "\n"
+																					   + "Longitude: " + dataEntry.getLongitude() + "\n" 
+																					   + "Carrier name: " + dataEntry.getCarrier() + "\n" 
+																					   + "Cell signal: " + dataEntry.getCell());
 			itemizedOverlay[dataEntry.getWifi()].addOverlay(overlayItem);
 		}
 

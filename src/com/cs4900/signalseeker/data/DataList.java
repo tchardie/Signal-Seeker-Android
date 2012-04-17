@@ -13,7 +13,6 @@ import org.xml.sax.XMLReader;
 
 import com.cs4900.signalseeker.Constants;
 
-import android.R.integer;
 import android.content.Context;
 import android.util.Log;
 

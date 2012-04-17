@@ -3,13 +3,8 @@ package com.cs4900.signalseeker;
 import com.cs4900.signalseeker.data.DataEntry;
 import com.cs4900.signalseeker.data.DataList;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;

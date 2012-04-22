@@ -1,12 +1,21 @@
 package com.cs4900.signalseeker;
 
+import java.util.HashMap;
+import java.util.Scanner;
+
+import org.apache.http.client.ResponseHandler;
+
 import com.cs4900.signalseeker.data.DataEntry;
 import com.cs4900.signalseeker.data.DataList;
+import com.cs4900.signalseeker.network.HTTPRequestHelper;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +42,43 @@ public class NewDataPoint extends Activity {
 	private TextView wifiTextView;
 	private Spinner cellSpinner;
 	private Button submitButton;
+
+	private ProgressDialog progressDialog;
+
+	private final Handler handler = new Handler() {
+		@Override
+		public void handleMessage(final Message msg) {
+			Log.v(Constants.LOGTAG, " " + NewDataPoint.CLASSTAG + " create worker thread done.");
+			progressDialog.dismiss();
+
+			String bundleResult = msg.getData().getString("RESPONSE");
+
+			// Pattern pattern =
+			// Pattern.compile("<id type=\"integer\">\\d+<id>");
+			Scanner s = new Scanner(bundleResult);
+			int id = 0;
+			while (s.hasNextLine()) {
+				String line = s.nextLine();
+				if (line.contains("id type")) {
+					Scanner s1 = new Scanner(line).useDelimiter("\\D+");
+
+					id = s1.nextInt();
+					break;
+				}
+
+				// Bundle b = msg.getData();
+				// CatalogEntry ce = CatalogEntry.fromBundle(b);
+
+				dataList = DataList.parse(NewDataPoint.this);
+				dataList.delete(newDataEntry);
+				newDataEntry.setId(new Integer(id));
+				dataList.create(newDataEntry);
+				Log.v(Constants.LOGTAG, " " + NewDataPoint.CLASSTAG + " " + newDataEntry + ", ~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+			}
+			finish();
+		}
+	};
 
 	/** Called when the activity is first created. */
 	@Override
@@ -78,16 +124,13 @@ public class NewDataPoint extends Activity {
 				try {
 					if (locationEditText.getText().toString().equals("")) {
 						Context context = getApplicationContext();
-						CharSequence text = "There are empty fields. Cannot submit!";
+						CharSequence text = "Please Enter a location name.";
 						int duration = Toast.LENGTH_SHORT;
 						Toast toast = Toast.makeText(context, text, duration);
 						toast.show();
 					}
 					else {
-						newDataEntry.setLocation(locationEditText.getText().toString());
-						newDataEntry.setCell(cellSpinner.getSelectedItemPosition());
-						dataList = DataList.parse(NewDataPoint.this);
-						dataList.create(newDataEntry);
+						createDataPoint();
 						finish();
 					}
 
@@ -114,5 +157,40 @@ public class NewDataPoint extends Activity {
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		newDataEntry.setCarrier(telephonyManager.getNetworkOperatorName());
 
+	}
+
+	public void createDataPoint() {
+		Log.v(Constants.LOGTAG, " " + NewDataPoint.CLASSTAG + " updateProduct");
+
+		this.progressDialog = ProgressDialog.show(this, " Working...", " Creating Signal Point", true, false);
+
+		final ResponseHandler<String> responseHandler = HTTPRequestHelper.getResponseHandlerInstance(this.handler);
+
+		final HashMap<String, String> params = new HashMap<String, String>();
+		params.put("location",locationEditText.getText().toString());
+		params.put("latitude", "" + newDataEntry.getLatitude());
+		params.put("longitude", "" + newDataEntry.getLongitude());
+		params.put("wifi", "" + newDataEntry.getWifi());
+		params.put("carrier", newDataEntry.getCarrier());
+		params.put("cell", "" + cellSpinner.getSelectedItemPosition());
+
+		// Create a new data point locally
+		newDataEntry.setLocation(locationEditText.getText().toString());
+		newDataEntry.setCell(cellSpinner.getSelectedItemPosition());
+		dataList = DataList.parse(NewDataPoint.this);
+		dataList.create(newDataEntry);
+
+		// create data point on the server in a separate thread for
+		// ProgressDialog/Handler
+		// when complete send "empty" message to handler
+		new Thread() {
+			@Override
+			public void run() {
+				// networking stuff ...
+				HTTPRequestHelper helper = new HTTPRequestHelper(responseHandler);
+
+				helper.performPost(HTTPRequestHelper.MIME_TEXT_PLAIN, "http://signalseeker.herokuapp.com/data.xml", null, null, null, params);
+			}
+		}.start();
 	}
 }

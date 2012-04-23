@@ -173,7 +173,10 @@ public class NewDataPoint extends Activity {
 		params.put("wifi", "" + newDataEntry.getWifi());
 		params.put("carrier", newDataEntry.getCarrier());
 		params.put("cell", "" + cellSpinner.getSelectedItemPosition());
-
+		params.put("id", String.valueOf(newDataEntry.getId()));
+		params.put("address", newDataEntry.getLatitude()+", "+newDataEntry.getLongitude());
+		params.put("gmaps", "true");
+		
 		// Create a new data point locally
 		newDataEntry.setLocation(locationEditText.getText().toString());
 		newDataEntry.setCell(cellSpinner.getSelectedItemPosition());

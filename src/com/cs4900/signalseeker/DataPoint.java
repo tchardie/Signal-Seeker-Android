@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DataPoint extends Activity {
 
@@ -75,14 +76,15 @@ public class DataPoint extends Activity {
 
 	public void onResume() {
 		super.onResume();
-
+		
 		entry = DataEntry.fromBundle(getIntent().getExtras());
 		location.setText(entry.getLocation());
 		latitude.setText(String.valueOf(entry.getLatitude()));
 		longitude.setText(String.valueOf(entry.getLongitude()));
 		wifi.setText(String.valueOf(entry.getWifi()));
 		carrier.setText(entry.getCarrier());
-		cell.setText(String.valueOf(entry.getCell()));
+//		cell.setText(String.valueOf(entry.getCell()));
+		cell.setText(String.valueOf(entry.getId()));
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,7 +94,7 @@ public class DataPoint extends Activity {
 	}
 
 	public boolean onMenuItemSelected(int id, MenuItem item) {
-		dataList = DataList.parse(DataPoint.this);
+		//dataList = DataList.parse(DataPoint.this);
 		deleteDataPoint();
 		Intent intent = new Intent(this, DataListView.class);
 		startActivity(intent);
@@ -122,16 +124,22 @@ public class DataPoint extends Activity {
 		if (!cell.getText().toString().equals("")) {
 			params.put("cell", cell.getText().toString());
 		}
+		params.put("id", Integer.toString(entry.getId()));
+		params.put("address", latitude.getText().toString()+", "+longitude.getText().toString());
+		params.put("gmaps", "true");
 
 		this.progressDialog = ProgressDialog.show(this, " Working...", " Updating Signal Point", true, false);
-
+		
+		//entry.setId(dataList.getAllDataEntries().size()+1);
 		entry.setLocation(location.getText().toString());
 		entry.setLatitude(Double.parseDouble(latitude.getText().toString()));
 		entry.setLongitude(Double.parseDouble(longitude.getText().toString()));
 		entry.setWifi(Integer.parseInt(wifi.getText().toString()));
 		entry.setCarrier(carrier.getText().toString());
 		entry.setCell(Integer.parseInt(cell.getText().toString()));
-
+		entry.setAddress(latitude.toString()+", "+longitude.toString());
+		entry.setGmaps("true");
+		
 		dataList = DataList.parse(DataPoint.this);
 		dataList.replace(entry);
 
@@ -153,7 +161,7 @@ public class DataPoint extends Activity {
 
 	public void deleteDataPoint() {
 
-		Log.v(Constants.LOGTAG, " " + DataPoint.CLASSTAG + " deleteDataPoint");
+		Log.v(Constants.LOGTAG, " " + DataPoint.CLASSTAG + " deleteDataPoint.ID "+entry.getId());
 
 		// Get ready to send the HTTP DELETE request to update the Points data
 		// the server

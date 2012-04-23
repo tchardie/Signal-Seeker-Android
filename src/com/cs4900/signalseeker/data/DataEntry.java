@@ -10,9 +10,27 @@ public class DataEntry {
     private int wifi;
     private int cell;
     private String carrier;
+    private String address;
+    private String gmaps;
 	
 	public DataEntry() {
 
+	}
+
+	public String getGmaps() {
+		return gmaps;
+	}
+
+	public void setGmaps(String gmaps) {
+		this.gmaps = gmaps;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public int getId() {

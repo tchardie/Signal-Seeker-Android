@@ -42,7 +42,8 @@ public class DataListView extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 
 		Intent intent = new Intent(this, DataPoint.class);
-		intent.putExtras(list.get((int) id).toBundle());
+		intent.putExtras(list.get(position).toBundle());
+		intent.putExtra("id", list.get(position).getId());
 		startActivity(intent);
 	}
 

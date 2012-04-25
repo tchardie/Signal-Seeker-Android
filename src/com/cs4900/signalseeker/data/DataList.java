@@ -50,10 +50,10 @@ public class DataList {
 			for (int i = 0; i < getDataEntryCount(); i++) {
 				DataEntry ue = getDataEntry(i);
 				if (ue.getLocation().equals(newDataEntry.getLocation())) {
-					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
-							+ "Replacing DataEntry");
+					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Replacing DataEntry");
 					newlist.addDataEntry(newDataEntry);
-				} else {
+				}
+				else {
 					newlist.addDataEntry(ue);
 				}
 			}
@@ -70,12 +70,12 @@ public class DataList {
 			for (int i = 0; i < getDataEntryCount(); i++) {
 				DataEntry ue = getDataEntry(i);
 				if (ue.getLocation().equals(DataEntry.getLocation())) {
-					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
-							+ "Deleting DataEntry");
+					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Deleting DataEntry");
 
-				} else {
+				}
+				else {
 					newlist.addDataEntry(ue);
-					Log.d(Constants.LOGTAG, " "+DataList.CLASSTAG+"Entry Not Deleted");
+					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Entry Not Deleted");
 				}
 			}
 			this.dataList = newlist.dataList;
@@ -112,19 +112,16 @@ public class DataList {
 	// Write to the XML file
 	public void persist() {
 		try {
-			
+
 			/** This Region for emulator with xml file!!! **/
-			FileOutputStream fos = this.context.openFileOutput(
-					Constants.DATA_XML_FILE, Context.MODE_PRIVATE);
-			 
-			
-			/**Comment this for actual phone
-			File file = new File("/mnt/sdcard/data.xml");
-			file.createNewFile();
-			FileOutputStream fos = new FileOutputStream(file);
-			**/
-			fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-					.getBytes());
+			FileOutputStream fos = this.context.openFileOutput(Constants.DATA_XML_FILE, Context.MODE_PRIVATE);
+
+			/**
+			 * Comment this for actual phone File file = new
+			 * File("/mnt/sdcard/data.xml"); file.createNewFile();
+			 * FileOutputStream fos = new FileOutputStream(file);
+			 **/
+			fos.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n".getBytes());
 			fos.write("<data>\n".getBytes());
 			for (int i = 0; i < getDataEntryCount(); i++) {
 				DataEntry ce = getDataEntry(i);
@@ -134,8 +131,7 @@ public class DataList {
 			fos.flush();
 			fos.close();
 		} catch (Exception e) {
-			Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
-					+ "Failed to write out file?" + e.getMessage());
+			Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Failed to write out file?" + e.getMessage());
 		}
 	}
 
@@ -143,15 +139,14 @@ public class DataList {
 	public static DataList parse(Context context) {
 		try {
 			/** This line for emulator **/
-			FileInputStream fis = context
-					.openFileInput(Constants.DATA_XML_FILE);
-			
-			
-			/** this line for actual phone 
-			File file = new File("/mnt/sdcard/data.xml");
-			FileInputStream fis = new FileInputStream(file);
-			**/
-			
+			FileInputStream fis = context.openFileInput(Constants.DATA_XML_FILE);
+
+			/**
+			 * this line for actual phone File file = new
+			 * File("/mnt/sdcard/data.xml"); FileInputStream fis = new
+			 * FileInputStream(file);
+			 **/
+
 			if (fis == null) {
 				return null;
 			}
@@ -189,8 +184,7 @@ public class DataList {
 			// return our new Datalist
 			return clHandler.getList();
 		} catch (Exception e) {
-			Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG
-					+ "Error parsing Data list xml file: " + e.getMessage());
+			Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Error parsing Data list xml file: " + e.getMessage());
 			return null;
 		}
 	}

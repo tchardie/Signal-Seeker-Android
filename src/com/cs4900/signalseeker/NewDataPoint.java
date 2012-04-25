@@ -135,7 +135,7 @@ public class NewDataPoint extends Activity {
 					}
 
 				} catch (Exception e) {
-					Log.i(Constants.LOGTAG + ": " + EntryPage.CLASSTAG, "Failed to Submit new Data Point" + e.getMessage() + "]");
+					Log.i(Constants.LOGTAG + ": " + NewDataPoint.CLASSTAG, "Failed to Submit new Data Point" + e.getMessage() + "]");
 				}
 			}
 		});

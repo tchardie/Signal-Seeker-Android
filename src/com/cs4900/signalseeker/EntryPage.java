@@ -31,30 +31,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 public class EntryPage extends MapActivity {
 
-	protected static final String CLASSTAG = EntryPage.class.getSimpleName();
+	private static final String CLASSTAG = EntryPage.class.getSimpleName();
+	private static final int MENU_VIEW_POINTS = Menu.FIRST;
+	private static final int MENU_REFRESH_MAP = Menu.FIRST + 1;
 
 	private MapView mapView;
 	private MapController mapController;
-	private EditText locationText;
 	private Button submitSignalButton;
 	private List<DataEntry> list;
 
 	LocationManager lm;
 	LocationListener ll;
 	Location location;
-	
+
 	ProgressDialog progressDialog;
 
 	private final Handler progressHandler = new Handler() {
 
 		@Override
 		public void handleMessage(final Message msg) {
-			
+
 			progressDialog.dismiss();
 
 			String bundleResult = msg.getData().getString("RESPONSE");
@@ -69,6 +69,7 @@ public class EntryPage extends MapActivity {
 				fos.write(bundleResult.getBytes());
 				fos.flush();
 				fos.close();
+
 			} catch (Exception e) {
 				Log.d("Signal Seeker", "Exception: " + e.getMessage());
 				finish();
@@ -83,17 +84,6 @@ public class EntryPage extends MapActivity {
 		setContentView(R.layout.main);
 
 		this.progressDialog = ProgressDialog.show(this, "Loading Map", "Please Wait", true, false);
-
-		final ResponseHandler<String> responseHandler = HTTPRequestHelper.getResponseHandlerInstance(this.progressHandler);
-		
-		new Thread() {
-
-			@Override
-			public void run() {
-				HTTPRequestHelper helper = new HTTPRequestHelper(responseHandler);
-				helper.performGet("http://signalseeker.herokuapp.com/data.xml", null, null, null);
-			}
-		}.start();
 
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
@@ -131,7 +121,25 @@ public class EntryPage extends MapActivity {
 	public void onResume() {
 		super.onResume();
 
+		populateMap();
+
+	}
+
+	private void populateMap() {
+
+		final ResponseHandler<String> responseHandler = HTTPRequestHelper.getResponseHandlerInstance(this.progressHandler);
+
+		new Thread() {
+
+			@Override
+			public void run() {
+				HTTPRequestHelper helper = new HTTPRequestHelper(responseHandler);
+				helper.performGet("http://signalseeker.herokuapp.com/data.xml", null, null, null);
+			}
+		}.start();
+
 		mapView.getOverlays().clear();
+		mapView.invalidate();
 		List<Overlay> mapOverlays = mapView.getOverlays();
 
 		// Initialize wifi signal markers
@@ -172,28 +180,33 @@ public class EntryPage extends MapActivity {
 		mapOverlays.add(itemizedOverlay[2]);
 		mapOverlays.add(itemizedOverlay[3]);
 		mapOverlays.add(itemizedOverlay[4]);
-
-	}
-
-	@Override
-	protected boolean isRouteDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, 0, 0, R.string.menu_settings).setIcon(android.R.drawable.ic_menu_manage);
+		menu.add(0, EntryPage.MENU_VIEW_POINTS, 0, R.string.menu_view_points).setIcon(android.R.drawable.ic_menu_manage);
+		menu.add(0, EntryPage.MENU_REFRESH_MAP, 0, R.string.menu_refresh_map).setIcon(R.drawable.ic_menu_refresh);
 		return true;
 	}
 
 	public boolean onMenuItemSelected(int id, MenuItem item) {
 
-		// Intent intent = new Intent(Constants.INTENT_ACTION_SETTINGS);
-		// startActivity(intent);
-		Intent intent = new Intent(EntryPage.this, DataListView.class);
-		startActivity(intent);
-		return true;
+		Intent intent = null;
+		switch (item.getItemId()) {
+		case MENU_VIEW_POINTS:
+			intent = new Intent(EntryPage.this, DataListView.class);
+			startActivity(intent);
+			return true;
+		case MENU_REFRESH_MAP:
+			populateMap();
+			return true;
+		}
+		return super.onMenuItemSelected(id, item);
+	}
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		return false;
 	}
 
 }

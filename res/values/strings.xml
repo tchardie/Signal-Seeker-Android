@@ -4,10 +4,9 @@
     <string name="signal_seeker_logo">Signal Seeker</string>
     <string name="app_name">Signal Seeker</string>
 	
-    <string name="menu_settings">View Points</string>
+    <string name="menu_view_points">View Points</string>
     <string name="local_xml">data.xml</string>
     <string name="entry_add_button_label">Submit Signal</string>
-    <string name="settings">Points</string>
     <string name="delete">Delete</string>
     <string name="new_data_point">New Data Point</string>
     <string-array name="cell_signal_array">
@@ -19,4 +18,6 @@
     </string-array>
     <string name="data_point">Data Point</string>
     <string name="point_list">List of data points</string>
+    <string name="menu_refresh_map">Refresh Map</string>
+    <string name="data_points_view">Data Points</string>
 </resources>

@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.cs4900.signalseeker.Constants;
-import com.cs4900.signalseeker.EntryPage;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 
@@ -43,8 +42,7 @@ public class CustomizedOverlay extends ItemizedOverlay<OverlayItem> {
 			dialog.show();
 			return true;
 		} catch (Exception e) {
-			Log.i(Constants.LOGTAG + ": " + CustomizedOverlay.class,
-					"Failed to load New Data Point page" + e.getMessage() + "]");
+			Log.i(Constants.LOGTAG + ": " + CustomizedOverlay.class, "Failed to load New Data Point page" + e.getMessage() + "]");
 		}
 		return false;
 	}

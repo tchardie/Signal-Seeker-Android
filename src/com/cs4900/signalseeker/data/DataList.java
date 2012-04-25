@@ -45,16 +45,17 @@ public class DataList {
 	}
 
 	public void replace(DataEntry newDataEntry) {
+		Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Replacing DataEntry" + newDataEntry.getId());
 		try {
 			DataList newlist = new DataList(this.context);
 			for (int i = 0; i < getDataEntryCount(); i++) {
-				DataEntry ue = getDataEntry(i);
-				if (ue.getLocation().equals(newDataEntry.getLocation())) {
+				DataEntry de = getDataEntry(i);
+				if (de.getId() == newDataEntry.getId()) {
 					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Replacing DataEntry");
 					newlist.addDataEntry(newDataEntry);
 				}
 				else {
-					newlist.addDataEntry(ue);
+					newlist.addDataEntry(de);
 				}
 			}
 			this.dataList = newlist.dataList;
@@ -64,18 +65,18 @@ public class DataList {
 		}
 	}
 
-	public void delete(DataEntry DataEntry) {
+	public void delete(DataEntry dataEntry) {
 		try {
 			DataList newlist = new DataList(this.context);
 			for (int i = 0; i < getDataEntryCount(); i++) {
-				DataEntry ue = getDataEntry(i);
-				if (ue.getLocation().equals(DataEntry.getLocation())) {
-					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Deleting DataEntry");
+				DataEntry de = getDataEntry(i);
+				if (de.getId() == dataEntry.getId()) {
+					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + " Deleting DataEntry");
 
 				}
 				else {
-					newlist.addDataEntry(ue);
-					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + "Entry Not Deleted");
+					newlist.addDataEntry(de);
+					Log.d(Constants.LOGTAG, " " + DataList.CLASSTAG + " Entry Not Deleted");
 				}
 			}
 			this.dataList = newlist.dataList;

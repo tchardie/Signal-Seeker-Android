@@ -27,7 +27,7 @@ public class DataPoint extends Activity {
 
 	private static final String CLASSTAG = DataPoint.class.getSimpleName();
 
-	DataEntry entry;
+	DataEntry dataEntry;
 	DataList dataList;
 
 	TextView location;
@@ -77,14 +77,13 @@ public class DataPoint extends Activity {
 	public void onResume() {
 		super.onResume();
 		
-		entry = DataEntry.fromBundle(getIntent().getExtras());
-		location.setText(entry.getLocation());
-		latitude.setText(String.valueOf(entry.getLatitude()));
-		longitude.setText(String.valueOf(entry.getLongitude()));
-		wifi.setText(String.valueOf(entry.getWifi()));
-		carrier.setText(entry.getCarrier());
-//		cell.setText(String.valueOf(entry.getCell()));
-		cell.setText(String.valueOf(entry.getId()));
+		dataEntry = DataEntry.fromBundle(getIntent().getExtras());
+		location.setText(dataEntry.getLocation());
+		latitude.setText(String.valueOf(dataEntry.getLatitude()));
+		longitude.setText(String.valueOf(dataEntry.getLongitude()));
+		wifi.setText(String.valueOf(dataEntry.getWifi()));
+		carrier.setText(dataEntry.getCarrier());
+		cell.setText(String.valueOf(dataEntry.getCell()));
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,24 +123,24 @@ public class DataPoint extends Activity {
 		if (!cell.getText().toString().equals("")) {
 			params.put("cell", cell.getText().toString());
 		}
-		params.put("id", Integer.toString(entry.getId()));
-		params.put("address", latitude.getText().toString()+", "+longitude.getText().toString());
+		params.put("id", Integer.toString(dataEntry.getId()));
+		params.put("address", latitude.getText().toString() + ", " + longitude.getText().toString());
 		params.put("gmaps", "true");
 
 		this.progressDialog = ProgressDialog.show(this, " Working...", " Updating Signal Point", true, false);
 		
 		//entry.setId(dataList.getAllDataEntries().size()+1);
-		entry.setLocation(location.getText().toString());
-		entry.setLatitude(Double.parseDouble(latitude.getText().toString()));
-		entry.setLongitude(Double.parseDouble(longitude.getText().toString()));
-		entry.setWifi(Integer.parseInt(wifi.getText().toString()));
-		entry.setCarrier(carrier.getText().toString());
-		entry.setCell(Integer.parseInt(cell.getText().toString()));
-		entry.setAddress(latitude.toString()+", "+longitude.toString());
-		entry.setGmaps("true");
+		dataEntry.setLocation(location.getText().toString());
+		dataEntry.setLatitude(Double.parseDouble(latitude.getText().toString()));
+		dataEntry.setLongitude(Double.parseDouble(longitude.getText().toString()));
+		dataEntry.setWifi(Integer.parseInt(wifi.getText().toString()));
+		dataEntry.setCarrier(carrier.getText().toString());
+		dataEntry.setCell(Integer.parseInt(cell.getText().toString()));
+		dataEntry.setAddress(latitude.toString()+", "+longitude.toString());
+		dataEntry.setGmaps("true");
 		
 		dataList = DataList.parse(DataPoint.this);
-		dataList.replace(entry);
+		dataList.replace(dataEntry);
 
 		// update dataPoint on the server in a separate thread for
 		// ProgressDialog/Handler
@@ -151,7 +150,7 @@ public class DataPoint extends Activity {
 			public void run() {
 				// networking stuff ...
 				HTTPRequestHelper helper = new HTTPRequestHelper(responseHandler);
-				helper.performPut(HTTPRequestHelper.MIME_TEXT_PLAIN, "http://signalseeker.herokuapp.com/data/" + entry.getId() + ".xml", null, null,
+				helper.performPut(HTTPRequestHelper.MIME_TEXT_PLAIN, "http://signalseeker.herokuapp.com/data/" + dataEntry.getId() + ".xml", null, null,
 						null, params);
 			}
 		}.start();
@@ -161,7 +160,7 @@ public class DataPoint extends Activity {
 
 	public void deleteDataPoint() {
 
-		Log.v(Constants.LOGTAG, " " + DataPoint.CLASSTAG + " deleteDataPoint.ID "+entry.getId());
+		Log.v(Constants.LOGTAG, " " + DataPoint.CLASSTAG + " deleteDataPoint.ID "+dataEntry.getId());
 
 		// Get ready to send the HTTP DELETE request to update the Points data
 		// the server
@@ -170,7 +169,7 @@ public class DataPoint extends Activity {
 		this.progressDialog = ProgressDialog.show(this, " Working...", " Deleting Signal Point", true, false);
 
 		dataList = DataList.parse(DataPoint.this);
-		dataList.delete(entry);
+		dataList.delete(dataEntry);
 
 		// delete data point on the server in a separate thread for
 		// ProgressDialog/Handler
@@ -180,7 +179,7 @@ public class DataPoint extends Activity {
 			public void run() {
 				// networking stuff ...
 				HTTPRequestHelper helper = new HTTPRequestHelper(responseHandler);
-				helper.performDelete(HTTPRequestHelper.MIME_TEXT_PLAIN, "http://signalseeker.herokuapp.com/data/" + entry.getId() + ".xml", null,
+				helper.performDelete(HTTPRequestHelper.MIME_TEXT_PLAIN, "http://signalseeker.herokuapp.com/data/" + dataEntry.getId() + ".xml", null,
 						null, null, null);
 				handler.sendEmptyMessage(0);
 			}

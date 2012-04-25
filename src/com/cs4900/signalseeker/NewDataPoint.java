@@ -16,6 +16,8 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -156,7 +158,6 @@ public class NewDataPoint extends Activity {
 		// Carrier name
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		newDataEntry.setCarrier(telephonyManager.getNetworkOperatorName());
-
 	}
 
 	public void createDataPoint() {
@@ -174,7 +175,7 @@ public class NewDataPoint extends Activity {
 		params.put("carrier", newDataEntry.getCarrier());
 		params.put("cell", "" + cellSpinner.getSelectedItemPosition());
 		params.put("id", String.valueOf(newDataEntry.getId()));
-		params.put("address", newDataEntry.getLatitude()+", "+newDataEntry.getLongitude());
+		params.put("address", newDataEntry.getLatitude() + ", " + newDataEntry.getLongitude());
 		params.put("gmaps", "true");
 		
 		// Create a new data point locally

@@ -124,7 +124,7 @@ public class DataEntry {
         ue.setWifi(b.getInt("wifi"));
         ue.setCell(b.getInt("cell"));
         ue.setCarrier(b.getString("carrier"));
-        ue.setId(b.getInt("i"));
+        ue.setId(b.getInt("id"));
 
         return ue;
     }

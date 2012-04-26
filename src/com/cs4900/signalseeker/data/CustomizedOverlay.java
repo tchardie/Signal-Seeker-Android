@@ -18,11 +18,13 @@ public class CustomizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 	public CustomizedOverlay(Drawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
+		populate();
 	}
 
 	public CustomizedOverlay(Drawable defaultMarker, Context context) {
 		this(defaultMarker);
 		this.context = context;
+		populate();
 	}
 
 	protected OverlayItem createItem(int i) {

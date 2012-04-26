@@ -153,7 +153,7 @@ public class NewDataPoint extends Activity {
 		// Wifi signal strength
 		WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		int RSSI = wifiManager.getConnectionInfo().getRssi();
-		newDataEntry.setWifi(wifiManager.calculateSignalLevel(RSSI, 6));
+		newDataEntry.setWifi(wifiManager.calculateSignalLevel(RSSI, 5));
 
 		// Carrier name
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
